@@ -12,3 +12,10 @@ console.log(`Eu amo chocolate. To zoando, é ${afirmacao}`);
 const idade = 20;
 const lazer = "brincar";
 console.log(`Eu tenho ${idade} anos e gosto de ${lazer}`);
+
+const nome = "Lucas ";
+const numero = 24;
+const combinacao = nome + numero;
+console.log(combinacao);
+//a estrutura "typeof" diz qual é a característica do item mostrado no console log
+
