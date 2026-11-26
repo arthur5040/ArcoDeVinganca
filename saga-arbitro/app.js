@@ -244,52 +244,74 @@
   }
 
   /** Cartão de um oponente no esquadrão: já no tier escolhido, com nomes editáveis. */
+  /** Vida atual do oponente (guardada em op.vida; sem valor = cheia). */
+  function vidaAtual(op, max) {
+    return op.vida == null ? max : Math.min(max, Math.max(0, op.vida));
+  }
+
+  /** Cartão compacto de um oponente no esquadrão: tier escolhido, Vida controlável e nomes editáveis. */
   function cartaoOponente(op, idx, total, jogadores) {
     const m = MOLDE[op.molde];
     const t = TIER[op.tier];
     const vida = vidaDe(op, jogadores);
+    const atual = vidaAtual(op, vida.valor);
+    const ferido = atual > 0 && atual <= Math.floor(vida.valor / 2);
+    const caido = atual === 0;
+    const gangue = op.tier === "fraco" && op.gangue;
     const visiveis = m.pecas.map((p, i) => [p, i]).filter(([p]) => pecaVisivel(p, op.tier));
-    const ocultas = m.pecas.filter((p) => !pecaVisivel(p, op.tier));
     const segTier = ORDEM_TIER.map((id) =>
       `<button type="button" data-acao="tier" data-tier="${id}" aria-pressed="${op.tier === id}">${TIER[id].nome}</button>`).join("");
     const segMoral = MORAIS.map((v) =>
       `<button type="button" data-acao="moral" data-moral="${v}" aria-pressed="${op.moral === v}">${v}</button>`).join("");
-    const textoOcultas = ocultas.length
-      ? `<div class="escondidas">No ${t.nome} ficam de fora: ${ocultas.map((p) => `${TIPO_NOME[p.tipo]} (${TIER[p.tier_minimo].nome}+)`).join(", ")}.</div>`
-      : "";
+    const estado = caido ? `<span class="selo-estado selo-estado--caido">Caído</span>`
+      : ferido ? `<span class="selo-estado selo-estado--ferido">Ferido</span>` : "";
+    const pct = vida.valor ? Math.round((atual / vida.valor) * 100) : 0;
 
-    return `<div class="oponente" data-uid="${op.uid}">
-      <div class="oponente__ordem">
-        <span>${idx + 1}</span>
-        <button class="icone-btn" type="button" data-acao="subir" title="Subir" aria-label="Subir" ${idx === 0 ? "disabled" : ""}>↑</button>
-        <button class="icone-btn" type="button" data-acao="descer" title="Descer" aria-label="Descer" ${idx === total - 1 ? "disabled" : ""}>↓</button>
-        <button class="icone-btn" type="button" data-acao="duplicar" title="Duplicar" aria-label="Duplicar">⧉</button>
-        <button class="icone-btn" type="button" data-acao="remover" title="Tirar do esquadrão" aria-label="Tirar do esquadrão">✕</button>
-      </div>
-      <article class="cartao">
+    return `<div class="oponente ${caido ? "oponente--caido" : ""}" data-uid="${op.uid}">
+      <article class="cartao cartao--compacto">
         <div class="cartao__cabeca">
-          <span class="cartao__num">${m.numero}</span>
+          <span class="cartao__num" title="Ordem no esquadrão">${idx + 1}</span>
           <input class="cartao__nome-input" data-campo="nome" value="${esc(op.nome)}" aria-label="Nome do oponente">
           <span class="pos pos--${m.posicao}">${POS_NOME[m.posicao]}</span>
         </div>
-        <div class="cartao__resumo">Molde ${esc(m.nome)} · ${esc(m.resumo)}</div>
+        <div class="oponente__barra">
+          <span class="oponente__molde">${m.numero} · ${esc(m.nome)}</span>
+          <span class="oponente__acoes">
+            <button class="icone-btn" type="button" data-acao="subir" title="Pra trás" aria-label="Mover pra trás" ${idx === 0 ? "disabled" : ""}>←</button>
+            <button class="icone-btn" type="button" data-acao="descer" title="Pra frente" aria-label="Mover pra frente" ${idx === total - 1 ? "disabled" : ""}>→</button>
+            <button class="icone-btn" type="button" data-acao="duplicar" title="Duplicar" aria-label="Duplicar">⧉</button>
+            <button class="icone-btn" type="button" data-acao="remover" title="Tirar do esquadrão" aria-label="Tirar do esquadrão">✕</button>
+          </span>
+        </div>
+        <div class="vida-painel">
+          <div class="vida-painel__conta">
+            <button class="icone-btn" type="button" data-acao="vida" data-delta="-1" aria-label="Tirar 1 de Vida">−</button>
+            <div class="vida-painel__num"><b>${atual}</b><span>/ ${vida.valor}</span></div>
+            <button class="icone-btn" type="button" data-acao="vida" data-delta="1" aria-label="Devolver 1 de Vida">+</button>
+            ${atual !== vida.valor ? `<button class="icone-btn" type="button" data-acao="vida-cheia" title="Vida cheia" aria-label="Voltar à Vida cheia">↺</button>` : ""}
+            ${estado}
+          </div>
+          <div class="vida-painel__barra" aria-hidden="true"><i style="width:${pct}%"></i></div>
+          <div class="vida-painel__info">
+            <span><b>D</b> ${t.dano}</span>
+            <span><b>Ações</b> ${t.acoes}</span>
+            ${gangue ? `<span><b>De pé</b> ${Math.ceil(atual / 2)} de ${jogadores}</span>` : vida.extra ? `<span class="apagado">${esc(vida.extra)}</span>` : ""}
+          </div>
+        </div>
         <div class="controles">
           <div class="controle"><span>Tier</span><div class="segmentos">${segTier}</div></div>
           <div class="controle"><span>Moral</span><div class="segmentos segmentos--moral">${segMoral}</div></div>
-          ${op.tier === "fraco" ? `<label class="checa"><input type="checkbox" data-campo="gangue" ${op.gangue ? "checked" : ""}> Gangue (1 membro por jogador)</label>` : ""}
-          <div class="status">
-            <div class="status__item status__item--vida"><b>${vida.valor}</b><small>Vida${vida.extra ? " · " + esc(vida.extra) : ""}</small></div>
-            <div class="status__item"><b>${t.dano}</b><small>Dano (D)</small></div>
-            <div class="status__item"><b>${t.acoes}</b><small>${t.acoes > 1 ? "Ações" : "Ação"}</small></div>
-          </div>
-        </div>
-        <div class="oponente__extra">
-          <label><span>Frase</span><input data-campo="frase" value="${esc(op.frase)}" placeholder="uma frase que ele diria"></label>
-          <label><span>Quer</span><input data-campo="quer" value="${esc(op.quer)}" placeholder="o que ele quer de verdade"></label>
+          ${op.tier === "fraco" ? `<label class="checa"><input type="checkbox" data-campo="gangue" ${op.gangue ? "checked" : ""}> Gangue</label>` : ""}
         </div>
         ${infoMolde(m)}
         <div class="cartao__pecas">${visiveis.map(([p, i]) => linhaPeca(p, i, { dano: t.dano, tier: op.tier, op })).join("")}</div>
-        ${textoOcultas}
+        <details class="oponente__mais">
+          <summary>Frase e Quer${op.frase || op.quer ? " ✓" : ""}</summary>
+          <div class="oponente__extra">
+            <label><span>Frase</span><input data-campo="frase" value="${esc(op.frase)}" placeholder="uma frase que ele diria"></label>
+            <label><span>Quer</span><input data-campo="quer" value="${esc(op.quer)}" placeholder="o que ele quer de verdade"></label>
+          </div>
+        </details>
       </article>
     </div>`;
   }
@@ -1027,7 +1049,9 @@
   }
   function rerenderEditor() {
     const y = window.scrollY;
+    const abertos = [...document.querySelectorAll(".oponente__mais[open]")].map((d) => d.closest("[data-uid]")?.dataset.uid);
     render();
+    abertos.forEach((uid) => { const d = $(`[data-uid="${uid}"] .oponente__mais`); if (d) d.open = true; });
     window.scrollTo(0, y);
   }
 
@@ -1184,6 +1208,17 @@
         const [op] = oponenteDe(alvo);
         if (!op) break;
         op.tier = alvo.dataset.tier;
+        marcarSujo();
+        rerenderEditor();
+        break;
+      }
+      case "vida":
+      case "vida-cheia": {
+        const [op] = oponenteDe(alvo);
+        if (!op) break;
+        const max = vidaDe(op, rascunho.dados.jogadores).valor;
+        op.vida = acao === "vida-cheia" ? null : Math.min(max, Math.max(0, vidaAtual(op, max) + +alvo.dataset.delta));
+        if (op.vida === max) op.vida = null;
         marcarSujo();
         rerenderEditor();
         break;

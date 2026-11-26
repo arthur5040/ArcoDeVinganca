@@ -356,7 +356,8 @@ a { color: inherit; }
 .barra-salvar__fim { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
 .barra-salvar .btn--leve { color: var(--papel); }
 .barra-salvar .btn--leve:hover { background: rgba(255,255,255,.1); }
-.lista-oponentes { display: grid; gap: 30px; }
+.lista-oponentes { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 24px 22px; align-items: start; }
+.lista-oponentes > .adicionar-grande { grid-column: 1 / -1; }
 
 /* ---------- cartão de molde (estilo do Livro de Oponentes) ---------- */
 .cartao {
@@ -417,10 +418,6 @@ body.na-entrada .rodape__secao { display: none; }
 
 /* cartão no editor */
 .oponente { position: relative; }
-.oponente__ordem {
-  position: absolute; left: -46px; top: 0; display: grid; gap: 6px; justify-items: center;
-}
-.oponente__ordem span { font-size: 22px; font-weight: 800; color: var(--petroleo); }
 .icone-btn {
   width: 30px; height: 30px; display: grid; place-items: center; border: 2px solid var(--tinta); border-radius: var(--raio);
   background: var(--papel-2); font-size: 14px; font-weight: 800; line-height: 1;
@@ -454,6 +451,45 @@ body.na-entrada .rodape__secao { display: none; }
   font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--tinta-2); font-size: 14px;
 }
 .adicionar-grande:hover { background: var(--papel-3); color: var(--tinta); }
+
+/* cartão compacto do esquadrão */
+.cartao--compacto { font-size: 13px; }
+.cartao--compacto .cartao__cabeca { padding: 7px 10px; gap: 8px; }
+.cartao--compacto .cartao__nome-input { font-size: 14px; letter-spacing: .1em; }
+.cartao--compacto .pos { font-size: 9.5px; padding: 2px 6px; }
+.oponente__barra {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 6px 4px 10px;
+  background: var(--petroleo-claro); border-bottom: 2px solid var(--tinta);
+}
+.oponente__molde { font-size: 12px; font-weight: 600; font-style: italic; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.oponente__acoes { display: flex; gap: 4px; flex: none; }
+.cartao--compacto .icone-btn { width: 26px; height: 26px; font-size: 13px; border-width: 1.5px; }
+.vida-painel { padding: 10px 10px 8px; display: grid; gap: 7px; border-bottom: 2px solid var(--tinta); background: var(--papel-2); }
+.vida-painel__conta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.vida-painel__conta .icone-btn { width: 32px; height: 32px; font-size: 18px; border-width: 2px; }
+.vida-painel__num { display: flex; align-items: baseline; gap: 4px; min-width: 70px; justify-content: center; font-variant-numeric: tabular-nums; }
+.vida-painel__num b { font-size: 28px; font-weight: 800; color: var(--vermelho); line-height: 1; }
+.vida-painel__num span { font-size: 13px; color: var(--tinta-2); font-weight: 600; }
+.vida-painel__barra { height: 6px; border-radius: 3px; background: var(--papel-3); overflow: hidden; }
+.vida-painel__barra i { display: block; height: 100%; background: var(--vermelho); transition: width .2s; }
+.vida-painel__info { display: flex; gap: 6px 14px; flex-wrap: wrap; font-size: 12px; }
+.vida-painel__info b { font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--petroleo); margin-right: 3px; }
+.vida-painel__info .apagado { color: var(--apagado); }
+.selo-estado { margin-left: auto; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; }
+.selo-estado--ferido { background: var(--vermelho); color: var(--papel-2); }
+.selo-estado--caido { background: var(--tinta); color: var(--papel); }
+.oponente--caido .cartao { opacity: .55; box-shadow: 3px 3px 0 var(--tinta-2); }
+.oponente--caido .vida-painel__num b { color: var(--tinta-2); }
+.cartao--compacto .controles { padding: 8px 10px; gap: 8px 12px; }
+.cartao--compacto .segmentos button { padding: 4px 7px; font-size: 11px; }
+.cartao--compacto .cartao__info { padding: 6px 10px 0; font-size: 12px; }
+.cartao--compacto .cartao__pecas { padding: 4px 10px 8px; }
+.cartao--compacto .linha { grid-template-columns: 66px 1fr; gap: 8px; padding: 5px 0; font-size: 12.5px; }
+.cartao--compacto .linha--especial { margin: 6px -10px -8px; padding: 7px 10px 9px; }
+.cartao--compacto .tag { font-size: 8.5px; letter-spacing: .12em; }
+.oponente__mais { border-top: 2px solid var(--tinta); }
+.oponente__mais summary { cursor: pointer; padding: 6px 10px; font-size: 10.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--petroleo); }
+.oponente__mais .oponente__extra { grid-template-columns: 1fr; padding: 0 10px 10px; }
 
 /* ---------- explorador de moldes ---------- */
 .explorador {
@@ -550,8 +586,6 @@ body.na-entrada .rodape__secao { display: none; }
 @media (max-width: 1000px) {
   :root { --lateral: 0px; }
   .vinha { display: none; }
-  .oponente__ordem { position: static; display: flex; margin-bottom: 8px; }
-  .lista-oponentes { gap: 24px; }
 }
 @media (max-width: 760px) {
   :root { --topo: 56px; }
