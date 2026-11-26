@@ -102,7 +102,12 @@
 
   async function fazerLogin(email, senha) {
     const conta = lerContas().contas.find((c) => c.email === email);
-    if (!conta || (await hashSenha(senha, conta.sal)) !== conta.hash) throw new Error("E-mail ou senha errados.");
+    if (!conta) {
+      throw new Error("Este navegador não tem conta com esse e-mail. A conta fica no navegador onde foi criada: abra o site lá, ou crie a conta aqui.");
+    }
+    if ((await hashSenha(senha, conta.sal)) !== conta.hash) {
+      throw new Error("Senha errada para esse e-mail. Confira maiúsculas, minúsculas e espaços.");
+    }
     entrarComo(email);
   }
 
