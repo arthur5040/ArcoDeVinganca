@@ -22,6 +22,7 @@
   ];
 
   const SECOES = {
+    login: ["IDENTIFICAÇÃO", "00"],
     entrada: ["ENTRADA", "01"],
     historias: ["HISTÓRIAS", "02"],
     historia: ["HISTÓRIA", "03"],
@@ -30,24 +31,86 @@
   };
 
   // ---------------------------------------------------------------- armazenamento
-  const CHAVE = "saga-arbitro-v1";
-  let db = carregar();
+  // Contas: e-mail + senha (com hash PBKDF2). Cada conta tem a sua própria chave de dados.
+  const CHAVE_CONTAS = "saga-arbitro-contas";
+  const CHAVE_SESSAO = "saga-arbitro-sessao";
+  const CHAVE_ANTIGA = "saga-arbitro-v1"; // dados de antes de existir login
+  const chaveDados = (email) => "saga-arbitro-dados:" + email;
 
-  function carregar() {
+  function lerJSON(chave) {
+    try { return JSON.parse(localStorage.getItem(chave)); } catch (_) { return null; }
+  }
+  function escreverJSON(chave, valor) {
+    try { localStorage.setItem(chave, JSON.stringify(valor)); return true; } catch (_) { return false; }
+  }
+  function lerContas() {
+    const c = lerJSON(CHAVE_CONTAS);
+    return c && Array.isArray(c.contas) ? c : { contas: [] };
+  }
+  function lerSessao() {
     try {
-      const bruto = JSON.parse(localStorage.getItem(CHAVE));
-      if (bruto && Array.isArray(bruto.historias)) return bruto;
-    } catch (_) { /* sem storage ou JSON quebrado: começa vazio */ }
-    return { historias: [] };
+      const email = localStorage.getItem(CHAVE_SESSAO);
+      return email && lerContas().contas.some((c) => c.email === email) ? email : null;
+    } catch (_) { return null; }
+  }
+
+  let usuario = lerSessao();
+  let db = usuario ? carregar(usuario) : { historias: [] };
+
+  function carregar(email) {
+    const bruto = lerJSON(chaveDados(email));
+    return bruto && Array.isArray(bruto.historias) ? bruto : { historias: [] };
   }
   function gravar() {
-    try {
-      localStorage.setItem(CHAVE, JSON.stringify(db));
-      return true;
-    } catch (_) {
-      toast("Não deu pra salvar neste navegador.");
-      return false;
+    if (!usuario) return false;
+    if (escreverJSON(chaveDados(usuario), db)) return true;
+    toast("Não deu pra salvar neste navegador.");
+    return false;
+  }
+
+  // ---- senha
+  const b64 = (bytes) => btoa(String.fromCharCode(...bytes));
+  const deB64 = (txt) => Uint8Array.from(atob(txt), (c) => c.charCodeAt(0));
+  async function hashSenha(senha, sal) {
+    const chave = await crypto.subtle.importKey("raw", new TextEncoder().encode(senha), "PBKDF2", false, ["deriveBits"]);
+    const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: deB64(sal), iterations: 150000, hash: "SHA-256" }, chave, 256);
+    return b64(new Uint8Array(bits));
+  }
+  const normalizarEmail = (e) => String(e || "").trim().toLowerCase();
+  const emailValido = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+
+  function entrarComo(email) {
+    usuario = email;
+    try { localStorage.setItem(CHAVE_SESSAO, email); } catch (_) { /* segue só nesta aba */ }
+    db = carregar(email);
+  }
+
+  async function criarConta(email, senha) {
+    const contas = lerContas();
+    if (contas.contas.some((c) => c.email === email)) throw new Error("Esse e-mail já tem conta. Use “Já tenho login”.");
+    const sal = b64(crypto.getRandomValues(new Uint8Array(16)));
+    contas.contas.push({ email, sal, hash: await hashSenha(senha, sal), criada: agora() });
+    if (!escreverJSON(CHAVE_CONTAS, contas)) throw new Error("Este navegador não deixa salvar dados. Tente fora da janela anônima.");
+    // Primeira conta do navegador: leva junto o que já estava salvo antes do login.
+    const antigo = contas.contas.length === 1 ? lerJSON(CHAVE_ANTIGA) : null;
+    if (antigo && Array.isArray(antigo.historias) && antigo.historias.length) {
+      escreverJSON(chaveDados(email), antigo);
+      try { localStorage.removeItem(CHAVE_ANTIGA); } catch (_) { /* fica a cópia antiga */ }
     }
+    entrarComo(email);
+  }
+
+  async function fazerLogin(email, senha) {
+    const conta = lerContas().contas.find((c) => c.email === email);
+    if (!conta || (await hashSenha(senha, conta.sal)) !== conta.hash) throw new Error("E-mail ou senha errados.");
+    entrarComo(email);
+  }
+
+  function sair() {
+    usuario = null;
+    db = { historias: [] };
+    rascunho = null;
+    try { localStorage.removeItem(CHAVE_SESSAO); } catch (_) { /* nada */ }
   }
   const novoId = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
   const copia = (o) => JSON.parse(JSON.stringify(o));
@@ -269,7 +332,10 @@
 
   function marcarSecao(chave, nav) {
     const [nome, num] = SECOES[chave];
-    document.body.classList.toggle("na-entrada", chave === "entrada");
+    document.body.classList.toggle("na-entrada", chave === "entrada" || chave === "login");
+    $("#topo-usuario").innerHTML = usuario
+      ? `<span class="topo__email" title="${esc(usuario)}">${esc(usuario)}</span><button class="btn btn--mini" type="button" data-acao="sair">Sair</button>`
+      : "";
     $("#rodape-secao").textContent = nome;
     $("#rodape-pagina").textContent = num;
     $("#topo-nav").innerHTML = nav
@@ -278,6 +344,47 @@
   }
 
   // ---------------------------------------------------------------- telas
+  let modoLogin = null; // "criar" | "entrar"
+
+  function telaLogin(emailAnterior = "") {
+    marcarSecao("login", []);
+    const temContas = lerContas().contas.length > 0;
+    const modo = modoLogin || (temContas ? "entrar" : "criar");
+    const criar = modo === "criar";
+    app.innerHTML = `<section class="entrada entrada--login">
+      <img class="entrada__mao" src="assets/mao.png" alt="">
+      <h1 class="entrada__titulo">Mesa do <b>Árbitro</b></h1>
+      <p class="entrada__tags"><span>#NARRAR</span><span>#PERGUNTAR</span><span>#DECIDIR</span></p>
+      <div class="entrada__palco">
+        <form class="login" id="form-login" data-modo="${modo}" novalidate>
+          <div class="login__cabeca">
+            <span class="login__naipe" aria-hidden="true">${criar ? "♠" : "♥"}</span>
+            <div><strong>${criar ? "Criar conta" : "Entrar"}</strong>
+            <small>${criar ? "Suas histórias e esquadrões ficam na sua conta." : "Bem-vindo de volta à mesa."}</small></div>
+          </div>
+          <label class="campo"><span>E-mail</span>
+            <input class="entrada-texto" id="login-email" name="email" type="email" autocomplete="email" required value="${esc(emailAnterior)}" placeholder="voce@email.com">
+          </label>
+          <label class="campo"><span>Senha</span>
+            <input class="entrada-texto" id="login-senha" name="senha" type="password" autocomplete="${criar ? "new-password" : "current-password"}" required ${criar ? 'minlength="6" placeholder="pelo menos 6 caracteres"' : ""}>
+          </label>
+          ${criar ? `<label class="campo"><span>Confirmar senha</span>
+            <input class="entrada-texto" id="login-senha2" name="senha2" type="password" autocomplete="new-password" required>
+          </label>` : ""}
+          <p class="login__erro" id="login-erro" role="alert"></p>
+          <button class="btn btn--vermelho login__enviar" type="submit">${criar ? "Criar conta" : "Entrar"}</button>
+          <div class="login__troca">
+            ${criar
+              ? `<span>Já tem um login?</span><button class="btn btn--mini" type="button" data-acao="modo-login" data-modo="entrar">Já tenho login</button>`
+              : `<span>Ainda não tem conta?</span><button class="btn btn--mini" type="button" data-acao="modo-login" data-modo="criar">Criar conta</button>`}
+          </div>
+          <p class="login__nota">A conta fica guardada neste navegador. Em outro aparelho, leve suas histórias com Exportar e Importar.</p>
+        </form>
+      </div>
+    </section>`;
+    setTimeout(() => $(emailAnterior ? "#login-senha" : "#login-email")?.focus(), 20);
+  }
+
   function telaEntrada() {
     marcarSecao("entrada", [["#inicio", "Entrada", true], ["#historias", "Histórias", false]]);
     const total = db.historias.length;
@@ -715,6 +822,7 @@
   function render() {
     if (exp.aberto) fecharExplorador();
     fecharModal();
+    if (!usuario) return telaLogin();
     const { partes } = rota();
     if (partes[0] === "historias") return telaHistorias();
     if (partes[0] === "h" && partes[1]) {
@@ -793,6 +901,16 @@
     if ((acao === "fechar-modal" || acao === "confirmar-nao") && alvo.classList.contains("modal-fundo") && ev.target !== alvo) return;
 
     switch (acao) {
+      case "modo-login":
+        modoLogin = alvo.dataset.modo;
+        telaLogin(normalizarEmail($("#login-email")?.value));
+        break;
+      case "sair": {
+        const fazer = () => { sair(); modoLogin = "entrar"; if (location.hash !== "#inicio") { pularGuarda = true; location.hash = "#inicio"; } else render(); };
+        if (rascunho && rascunho.sujo) confirmar("O esquadrão tem alterações não salvas. Sair da conta mesmo assim?", "Sair").then((ok) => ok && fazer());
+        else fazer();
+        break;
+      }
       case "comecar":
         location.hash = "#historias";
         break;
@@ -1028,7 +1146,35 @@
     }
   });
 
-  document.addEventListener("submit", (ev) => {
+  document.addEventListener("submit", async (ev) => {
+    if (ev.target.id === "form-login") {
+      ev.preventDefault();
+      const f = ev.target;
+      const erro = $("#login-erro");
+      const botao = f.querySelector(".login__enviar");
+      const email = normalizarEmail(f.email.value);
+      const senha = f.senha.value;
+      const criar = f.dataset.modo === "criar";
+      let msg = "";
+      if (!emailValido(email)) msg = "Escreva um e-mail válido, tipo voce@email.com.";
+      else if (!senha) msg = "Escreva a senha.";
+      else if (criar && senha.length < 6) msg = "A senha precisa de pelo menos 6 caracteres.";
+      else if (criar && senha !== f.senha2.value) msg = "As duas senhas não estão iguais.";
+      else if (!window.crypto?.subtle) msg = "Este navegador não consegue proteger a senha. Abra o site em https ou num navegador atualizado.";
+      if (msg) { erro.textContent = msg; return; }
+      erro.textContent = "";
+      botao.disabled = true;
+      try {
+        if (criar) await criarConta(email, senha); else await fazerLogin(email, senha);
+        modoLogin = null;
+        toast(criar ? "Conta criada. Bem-vindo à mesa." : "Login feito.");
+        if (location.hash && location.hash !== "#inicio") location.hash = "#inicio"; else render();
+      } catch (e) {
+        erro.textContent = e.message || "Não deu certo. Tente de novo.";
+        botao.disabled = false;
+      }
+      return;
+    }
     if (ev.target.id !== "form-nova") return;
     ev.preventDefault();
     const nome = new FormData(ev.target).get("nome").toString().trim();
