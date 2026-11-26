@@ -279,7 +279,7 @@
 
   // ---------------------------------------------------------------- telas
   function telaEntrada() {
-    marcarSecao("entrada", [["#/", "Entrada", true], ["#/historias", "Histórias", false]]);
+    marcarSecao("entrada", [["#inicio", "Entrada", true], ["#historias", "Histórias", false]]);
     const total = db.historias.length;
     app.innerHTML = `<section class="entrada">
       <img class="entrada__mao" src="assets/mao.png" alt="">
@@ -322,7 +322,7 @@
   }
 
   function telaHistorias() {
-    marcarSecao("historias", [["#/", "Entrada", false], ["#/historias", "Histórias", true]]);
+    marcarSecao("historias", [["#inicio", "Entrada", false], ["#historias", "Histórias", true]]);
     const lista = [...db.historias].sort((a, b) => (b.atualizada || "").localeCompare(a.atualizada || ""));
     app.innerHTML = `<section class="pagina">
       <div class="pagina__cabeca">
@@ -338,7 +338,7 @@
         ${lista.map((h) => {
           const nOp = h.esquadroes.reduce((s, e) => s + e.oponentes.length, 0);
           const escritas = h.batidas.filter((b) => b.texto.trim()).length;
-          return `<a class="ficha-historia" href="#/h/${h.id}/historia">
+          return `<a class="ficha-historia" href="#h-${h.id}-historia">
             <span class="ficha-historia__naipe">${["♠", "♥", "♦", "♣"][h.id.charCodeAt(0) % 4]}</span>
             <h3>${esc(h.nome)}</h3>
             <div class="ficha-historia__meta">
@@ -361,12 +361,12 @@
     return `<div class="historia-topo">
       <input class="historia-topo__nome" data-campo="nome-historia" value="${esc(h.nome)}" aria-label="Nome da história">
       <nav class="abas" aria-label="Partes da história">
-        <a href="#/h/${h.id}/historia" ${aba === "historia" ? 'aria-current="page"' : ""}>História</a>
-        <a href="#/h/${h.id}/esquadroes" ${aba === "esquadroes" ? 'aria-current="page"' : ""}>Esquadrões</a>
+        <a href="#h-${h.id}-historia" ${aba === "historia" ? 'aria-current="page"' : ""}>História</a>
+        <a href="#h-${h.id}-esquadroes" ${aba === "esquadroes" ? 'aria-current="page"' : ""}>Esquadrões</a>
       </nav>
     </div>`;
   }
-  const navHistoria = (h, aba) => [["#/", "Entrada", false], ["#/historias", "Histórias", false], [`#/h/${h.id}/${aba}`, h.nome.length > 22 ? h.nome.slice(0, 20) + "…" : h.nome, true]];
+  const navHistoria = (h, aba) => [["#inicio", "Entrada", false], ["#historias", "Histórias", false], [`#h-${h.id}-${aba}`, h.nome.length > 22 ? h.nome.slice(0, 20) + "…" : h.nome, true]];
 
   function telaHistoria(h) {
     marcarSecao("historia", navHistoria(h, "historia"));
@@ -426,20 +426,20 @@
       ${cabecaHistoria(h, "esquadroes")}
       <div class="pagina__cabeca" style="margin-top:0">
         <h2 class="rotulo-secao">Esquadrões <small>cada um com um tema e os oponentes de cima pra baixo</small></h2>
-        <div class="pagina__acoes"><a class="btn btn--vermelho" href="#/h/${h.id}/esq/novo?explorar=1">＋ Novo esquadrão</a></div>
+        <div class="pagina__acoes"><a class="btn btn--vermelho" href="#h-${h.id}-esq-novo">＋ Novo esquadrão</a></div>
       </div>
       <div class="grade-esquadroes">
         ${h.esquadroes.map((e) => `<article class="ficha-esq">
           <div class="ficha-esq__cabeca"><strong>${esc(e.tema || "Sem tema")}</strong><span>${e.jogadores} jog.</span></div>
           <ul>${e.oponentes.length ? e.oponentes.map((o) => `<li><span>${esc(o.nome)}</span><span class="mono">${TIER[o.tier].nome}${o.tier === "fraco" && o.gangue ? " · Gangue" : ""}</span></li>`).join("") : `<li><span class="linha__nota">Nenhum oponente ainda.</span></li>`}</ul>
           <div class="ficha-esq__acoes">
-            <a class="btn btn--mini btn--escuro" href="#/h/${h.id}/esq/${e.id}">Abrir</a>
+            <a class="btn btn--mini btn--escuro" href="#h-${h.id}-esq-${e.id}">Abrir</a>
             <button class="btn btn--mini" type="button" data-acao="copiar-texto" data-esq="${e.id}">Copiar texto</button>
             <button class="btn btn--mini" type="button" data-acao="duplicar-esq" data-esq="${e.id}">Duplicar</button>
             <button class="btn btn--mini" type="button" data-acao="apagar-esq" data-esq="${e.id}">Apagar</button>
           </div>
         </article>`).join("")}
-        <a class="ficha-nova" href="#/h/${h.id}/esq/novo?explorar=1"><big>＋</big>Novo esquadrão</a>
+        <a class="ficha-nova" href="#h-${h.id}-esq-novo"><big>＋</big>Novo esquadrão</a>
       </div>
     </section>`;
   }
@@ -467,9 +467,9 @@
     if (el) { el.textContent = "● alterações não salvas"; el.classList.add("sujo"); }
   }
 
-  function telaEsquadrao(h, esqId, query) {
+  function telaEsquadrao(h, esqId) {
     const r = abrirRascunho(h, esqId);
-    if (!r) { location.hash = `#/h/${h.id}/esquadroes`; return; }
+    if (!r) { location.hash = `#h-${h.id}-esquadroes`; return; }
     marcarSecao("esquadrao", navHistoria(h, "esquadroes"));
     const e = r.dados;
     app.innerHTML = `<section class="pagina">
@@ -477,7 +477,7 @@
       <div class="barra-salvar">
         <span class="barra-salvar__estado ${r.sujo ? "sujo" : ""}" id="estado-esq">${r.sujo ? "● alterações não salvas" : r.novo ? "esquadrão novo" : "tudo salvo"}</span>
         <div class="barra-salvar__fim">
-          <a class="btn btn--leve" href="#/h/${h.id}/esquadroes">Voltar</a>
+          <a class="btn btn--leve" href="#h-${h.id}-esquadroes">Voltar</a>
           <button class="btn btn--petroleo" type="button" data-acao="explorar">＋ Moldes</button>
           <button class="btn btn--vermelho" type="button" data-acao="salvar-esq">Salvar esquadrão</button>
         </div>
@@ -500,7 +500,7 @@
         <button class="adicionar-grande" type="button" data-acao="explorar">＋ Escolher moldes pra este esquadrão</button>
       </div>
     </section>`;
-    if (query.get("explorar") === "1" && !e.oponentes.length && !r.explorouUmaVez) {
+    if (r.novo && !e.oponentes.length && !r.explorouUmaVez) {
       r.explorouUmaVez = true;
       abrirExplorador();
     }
@@ -524,7 +524,7 @@
     toast("Esquadrão salvo na história.");
     if (eraNovo) {
       pularGuarda = true;
-      location.replace(`#/h/${h.id}/esq/${dados.id}`);
+      location.replace(`#h-${h.id}-esq-${dados.id}`);
     } else {
       const el = $("#estado-esq");
       if (el) { el.textContent = "tudo salvo"; el.classList.remove("sujo"); }
@@ -657,28 +657,71 @@
       </div>
     </div>`;
   }
-  function fecharModal() { modalRaiz.innerHTML = ""; }
+  let resolverConfirmacao = null;
+  /** Confirmação dentro da página (o navegador às vezes bloqueia confirm()). */
+  function confirmar(msg, textoSim = "Confirmar") {
+    responderConfirmacao(false);
+    modalRaiz.innerHTML = `<div class="modal-fundo" data-acao="confirmar-nao">
+      <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="mc-t">
+        <h2 id="mc-t">Tem certeza?</h2>
+        <p class="sub">${esc(msg)}</p>
+        <div class="modal__acoes">
+          <button class="btn btn--leve" type="button" data-acao="confirmar-nao">Cancelar</button>
+          <button class="btn btn--vermelho" type="button" data-acao="confirmar-sim">${esc(textoSim)}</button>
+        </div>
+      </div>
+    </div>`;
+    setTimeout(() => $('[data-acao="confirmar-sim"]')?.focus(), 20);
+    return new Promise((res) => { resolverConfirmacao = res; });
+  }
+  function responderConfirmacao(valor) {
+    const r = resolverConfirmacao;
+    resolverConfirmacao = null;
+    if (!r) return;
+    modalRaiz.innerHTML = "";
+    r(valor);
+  }
+  function modalTexto(titulo, sub, texto, nomeArquivo) {
+    modalRaiz.innerHTML = `<div class="modal-fundo" data-acao="fechar-modal">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt-t">
+        <h2 id="mt-t">${esc(titulo)}</h2>
+        <p class="sub">${esc(sub)}</p>
+        <textarea class="area-texto mono" id="texto-modal" rows="12" readonly>${esc(texto)}</textarea>
+        <div class="modal__acoes">
+          <button class="btn btn--leve" type="button" data-acao="fechar-modal">Fechar</button>
+          ${nomeArquivo ? `<button class="btn" type="button" data-acao="baixar-texto" data-nome="${esc(nomeArquivo)}">Baixar arquivo</button>` : ""}
+          <button class="btn btn--vermelho" type="button" data-acao="copiar-modal">Copiar</button>
+        </div>
+      </div>
+    </div>`;
+    setTimeout(() => $("#texto-modal")?.select(), 20);
+  }
+  function fecharModal() {
+    if (resolverConfirmacao) return responderConfirmacao(false);
+    modalRaiz.innerHTML = "";
+  }
 
   // ---------------------------------------------------------------- roteador
   let hashAnterior = location.hash;
   let pularGuarda = false;
+  let voltandoSemRender = false;
 
   function rota() {
-    const [caminho, qs] = (location.hash.replace(/^#/, "") || "/").split("?");
-    const partes = caminho.split("/").filter(Boolean);
-    return { partes, query: new URLSearchParams(qs || "") };
+    // Endereços simples (#historias, #h-ID-historia, #h-ID-esq-ID): funcionam em qualquer lugar.
+    const partes = location.hash.replace(/^#\/?/, "").split(/[-/]/).filter(Boolean);
+    return { partes };
   }
 
   function render() {
     if (exp.aberto) fecharExplorador();
     fecharModal();
-    const { partes, query } = rota();
+    const { partes } = rota();
     if (partes[0] === "historias") return telaHistorias();
     if (partes[0] === "h" && partes[1]) {
       const h = historia(partes[1]);
-      if (!h) { location.replace("#/historias"); return; }
+      if (!h) { location.replace("#historias"); return; }
       if (partes[2] === "esquadroes") return telaEsquadroes(h);
-      if (partes[2] === "esq" && partes[3]) return telaEsquadrao(h, partes[3], query);
+      if (partes[2] === "esq" && partes[3]) return telaEsquadrao(h, partes[3]);
       return telaHistoria(h);
     }
     return telaEntrada();
@@ -686,20 +729,28 @@
 
   function saindoDoEditor(novoHash) {
     if (!rascunho) return false;
-    const base = `#/h/${rascunho.hid}/esq/${rascunho.esqId}`;
-    return !novoHash.startsWith(base);
+    const p = novoHash.replace(/^#\/?/, "").split(/[-/]/).filter(Boolean);
+    return !(p[0] === "h" && p[1] === rascunho.hid && p[2] === "esq" && p[3] === rascunho.esqId);
   }
 
   window.addEventListener("hashchange", () => {
     const novo = location.hash;
+    if (voltandoSemRender) {
+      voltandoSemRender = false;
+      hashAnterior = novo;
+      return;
+    }
     if (pularGuarda) {
       pularGuarda = false;
     } else if (rascunho && rascunho.sujo && saindoDoEditor(novo)) {
-      if (!confirm("O esquadrão tem alterações não salvas. Sair e perder essas mudanças?")) {
-        pularGuarda = true;
-        location.hash = hashAnterior;
-        return;
-      }
+      voltandoSemRender = true;
+      location.hash = hashAnterior;
+      confirmar("O esquadrão tem alterações não salvas. Sair e perder essas mudanças?", "Sair sem salvar").then((ok) => {
+        if (!ok) return;
+        rascunho.sujo = false;
+        location.hash = novo;
+      });
+      return;
     }
     if (saindoDoEditor(novo)) rascunho = null;
     hashAnterior = novo;
@@ -739,11 +790,11 @@
     const acao = alvo.dataset.acao;
 
     // fundo do modal: só fecha se clicou fora da caixa
-    if (acao === "fechar-modal" && alvo.classList.contains("modal-fundo") && ev.target !== alvo) return;
+    if ((acao === "fechar-modal" || acao === "confirmar-nao") && alvo.classList.contains("modal-fundo") && ev.target !== alvo) return;
 
     switch (acao) {
       case "comecar":
-        location.hash = "#/historias";
+        location.hash = "#historias";
         break;
       case "nova-historia":
         modalNovaHistoria();
@@ -755,30 +806,50 @@
         const h = historia(alvo.dataset.id);
         fecharModal();
         if (!h) break;
-        location.hash = alvo.dataset.para === "oponentes" ? `#/h/${h.id}/esq/novo?explorar=1` : `#/h/${h.id}/historia`;
+        location.hash = alvo.dataset.para === "oponentes" ? `#h-${h.id}-esq-novo` : `#h-${h.id}-historia`;
         break;
       }
       case "apagar-historia": {
         ev.preventDefault();
         ev.stopPropagation();
         const h = historia(alvo.dataset.id);
-        if (h && confirm(`Apagar “${h.nome}” e todos os esquadrões dela? Não tem volta.`)) {
+        if (h) confirmar(`Apagar “${h.nome}” e todos os esquadrões dela? Não tem volta.`, "Apagar").then((ok) => {
+          if (!ok) return;
           db.historias = db.historias.filter((x) => x.id !== h.id);
           gravar();
           render();
           toast("História apagada.");
-        }
+        });
         break;
       }
-      case "exportar": {
-        const blob = new Blob([JSON.stringify({ app: "saga-arbitro", versao: 1, historias: db.historias }, null, 2)], { type: "application/json" });
+      case "exportar":
+        modalTexto("Backup das histórias", "Guarde esse texto num arquivo .json. Pra trazer de volta, use Importar.",
+          JSON.stringify({ app: "saga-arbitro", versao: 1, historias: db.historias }, null, 2),
+          `saga-historias-${new Date().toISOString().slice(0, 10)}.json`);
+        break;
+      case "baixar-texto": {
+        const blob = new Blob([$("#texto-modal").value], { type: "application/json" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = `saga-historias-${new Date().toISOString().slice(0, 10)}.json`;
+        a.download = alvo.dataset.nome;
+        document.body.appendChild(a);
         a.click();
+        a.remove();
         setTimeout(() => URL.revokeObjectURL(a.href), 1000);
         break;
       }
+      case "copiar-modal": {
+        const ta = $("#texto-modal");
+        ta.select();
+        (navigator.clipboard?.writeText(ta.value) || Promise.reject())
+          .then(() => toast("Copiado."))
+          .catch(() => toast("Texto selecionado: use Ctrl+C."));
+        break;
+      }
+      case "confirmar-sim":
+      case "confirmar-nao":
+        responderConfirmacao(acao === "confirmar-sim");
+        break;
       case "modo": {
         const h = historiaAtual();
         if (!h) break;
@@ -803,12 +874,13 @@
       case "apagar-esq": {
         const h = historiaAtual();
         const e = h?.esquadroes.find((x) => x.id === alvo.dataset.esq);
-        if (e && confirm(`Apagar o esquadrão “${e.tema || "Sem tema"}”?`)) {
+        if (e) confirmar(`Apagar o esquadrão “${e.tema || "Sem tema"}”?`, "Apagar").then((ok) => {
+          if (!ok) return;
           h.esquadroes = h.esquadroes.filter((x) => x !== e);
           tocar(h);
           gravar();
           render();
-        }
+        });
         break;
       }
       case "duplicar-esq": {
@@ -833,7 +905,7 @@
         const txt = textoEsquadrao(e);
         (navigator.clipboard?.writeText(txt) || Promise.reject())
           .then(() => toast("Cartões copiados como texto."))
-          .catch(() => { prompt("Copie o texto:", txt); });
+          .catch(() => modalTexto("Cartões em texto", "Selecione e copie.", txt));
         break;
       }
 
