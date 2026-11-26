@@ -637,7 +637,12 @@
             ${p.para_se ? `<p class="cola__regra"><b>Para se</b> ${esc(p.para_se)} <span class="apagado">(${quadrados + (chefao ? 1 : 0)} quadradinhos)</span></p>` : ""}
           </li>`;
         }).join("")
-      : `<li class="cola__vazio">Nenhum Especial ainda. Só Forte e Chefão têm (e o Kabum do Explosivo, em qualquer tier).</li>`;
+      : "";
+    const tabelaFormas = `<table class="cola__formas">
+      <thead><tr><th>Forma</th><th>Acontece</th><th>Parado pela metade</th></tr></thead>
+      <tbody>${Object.entries(FORMA_CURTA).map(([f, [acontece, metade]]) =>
+        `<tr><th scope="row">${esc(f)}</th><td>${esc(acontece)}</td><td>${esc(metade)}</td></tr>`).join("")}</tbody>
+    </table>`;
     return `<details class="cola" id="cola" ${colaAberta ? "open" : ""}>
       <summary><span>Cola do mestre</span><small>Naipes e Especiais deste esquadrão</small></summary>
       <div class="cola__corpo">
@@ -649,7 +654,9 @@
         <section>
           <h3>Especiais</h3>
           <p class="cola__nota"><b>Turno 1:</b> anuncia, se planta e mostra a área. <b>Turno 2:</b> acontece primeiro, sem gastar ação; quem saiu da área escapa. <b>Parar:</b> Pleno risca 2, Parcial risca 1. Riscou tudo cancela, riscou algum fica pela metade.</p>
-          <ul class="cola__especiais">${listaEsp}</ul>
+          ${listaEsp ? `<ul class="cola__especiais">${listaEsp}</ul>` : ""}
+          <div class="cola__tabela">${tabelaFormas}</div>
+          <p class="cola__nota">O cartão diz a Forma entre parênteses. Não diz nada? É Explosão.</p>
         </section>
       </div>
     </details>`;
