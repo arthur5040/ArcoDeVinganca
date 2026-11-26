@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAGA · Mesa do Árbitro</title>
+  <meta name="description" content="Caderno do Árbitro de SAGA: histórias em cinco batidas e esquadrões montados a partir dos Moldes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500;600;700;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='2' width='24' height='28' rx='4' fill='%231d5a62'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23f3e3c7'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="vinha vinha--esq" aria-hidden="true"></div>
+  <div class="vinha vinha--dir" aria-hidden="true"></div>
+
+  <header class="topo">
+    <a class="marca" href="#inicio" aria-label="Voltar pra entrada">
+      <span class="marca__carta">♠</span>
+      <span class="marca__nome">SAGA</span>
+      <span class="marca__sub">Árbitro</span>
+    </a>
+    <nav class="topo__nav" id="topo-nav"></nav>
+    <div class="topo__usuario" id="topo-usuario"></div>
+    <span class="topo__versao">♠ ♥ ♦ ♣ · Alpha v0.7</span>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <footer class="rodape" aria-hidden="true">
+    <svg class="rodape__onda" viewBox="0 0 1200 70" preserveAspectRatio="none">
+      <path d="M0 34 C 180 20, 330 46, 520 36 S 860 8, 1130 52" fill="none" stroke="currentColor" stroke-width="2.4"/>
+      <path d="M50 46 C 200 38, 380 42, 560 50" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"/>
+    </svg>
+    <span class="rodape__secao" id="rodape-secao">ENTRADA</span>
+    <span class="rodape__naipes">♠ ♦ ♥ · ♣ ♦</span>
+    <span class="rodape__pagina" id="rodape-pagina">01</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div id="modal-raiz"></div>
+
+  <script src="moldes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
