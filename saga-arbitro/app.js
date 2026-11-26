@@ -599,6 +599,62 @@
     if (el) { el.textContent = "● alterações não salvas"; el.classList.add("sujo"); }
   }
 
+  // Cola do mestre: texto curto pra bater o olho durante a luta (Livro de Oponentes, págs. 2–3).
+  const NAIPES_COLA = [
+    ["Caído", "n-caido", "Não sai do lugar até o fim do próximo turno dele. Antes, você pode empurrar ele até 2 espaços."],
+    ["Atordoado", "n-atordoado", "A próxima rolagem dele tem Desvantagem."],
+    ["Ardendo", "n-ardendo", "Perde 1 de Vida na hora. A Couraça não reduz."],
+    ["Exposto", "n-exposto", "O próximo golpe nele não pode ser defendido, só Interceptado."],
+    ["Roubo", "n-roubo", "Leva um item, a voz ou a visão. A perícia que precisa disso fica com Desvantagem. Pleno nele devolve."],
+  ];
+  const FORMA_CURTA = {
+    "Explosão": ["Dano do tier em todos na área.", "Metade do dano."],
+    "Pânico": ["2 Naipes em todos na área, sem dano.", "Só o Naipe com !."],
+    "Reforço": ["Entra uma Gangue de Fracos, 1 membro por jogador.", "Metade dos membros."],
+    "Terreno": ["O lugar vira perigo até o “Para se”. Quem começa o turno ali sofre o Naipe.", "Dura só até o fim da próxima rodada."],
+    "Captura": ["Um alvo sai do mapa e perde 1 de Vida por turno. Só age pra se soltar (Pleno sai).", "O alvo só fica Caído."],
+  };
+  let colaAberta = true;
+  document.addEventListener("toggle", (ev) => { if (ev.target.id === "cola") colaAberta = ev.target.open; }, true);
+
+  function colaDoMestre(e) {
+    const especiais = [];
+    e.oponentes.forEach((op) => {
+      const m = MOLDE[op.molde];
+      m.pecas.forEach((p, i) => {
+        if (p.tipo !== "especial" || !pecaVisivel(p, op.tier)) return;
+        especiais.push({ op, p, nome: op.nomesPecas[i] || p.nome, dano: TIER[op.tier].dano, chefao: op.tier === "chefao" });
+      });
+    });
+    const quadrados = Math.max(2, e.jogadores);
+    const listaEsp = especiais.length
+      ? especiais.map(({ op, p, nome, dano, chefao }) => {
+          const [acontece, metade] = FORMA_CURTA[p.forma] || FORMA_CURTA["Explosão"];
+          return `<li class="cola__esp">
+            <div class="cola__esp-topo"><b>${esc(nome)}</b><span class="cola__forma">${esc(p.forma)}</span><span class="cola__dono">${esc(op.nome)}</span></div>
+            <p>${efeitoHTML(p.efeito, dano)}</p>
+            <p class="cola__regra"><b>Faz:</b> ${esc(acontece)} <b>Pela metade:</b> ${esc(metade)}</p>
+            ${p.para_se ? `<p class="cola__regra"><b>Para se</b> ${esc(p.para_se)} <span class="apagado">(${quadrados + (chefao ? 1 : 0)} quadradinhos)</span></p>` : ""}
+          </li>`;
+        }).join("")
+      : `<li class="cola__vazio">Nenhum Especial ainda. Só Forte e Chefão têm (e o Kabum do Explosivo, em qualquer tier).</li>`;
+    return `<details class="cola" id="cola" ${colaAberta ? "open" : ""}>
+      <summary><span>Cola do mestre</span><small>Naipes e Especiais deste esquadrão</small></summary>
+      <div class="cola__corpo">
+        <section>
+          <h3>Naipes do oponente</h3>
+          <p class="cola__nota">Duram até o fim do próximo turno do jogador. Repetido não soma, só renova. Com <b>!</b> passa mesmo no Parcial da Defesa.</p>
+          <ul class="cola__naipes">${NAIPES_COLA.map(([n, cls, txt]) => `<li><b class="${cls}">${n}</b><span>${txt}</span></li>`).join("")}</ul>
+        </section>
+        <section>
+          <h3>Especiais</h3>
+          <p class="cola__nota"><b>Turno 1:</b> anuncia, se planta e mostra a área. <b>Turno 2:</b> acontece primeiro, sem gastar ação; quem saiu da área escapa. <b>Parar:</b> Pleno risca 2, Parcial risca 1. Riscou tudo cancela, riscou algum fica pela metade.</p>
+          <ul class="cola__especiais">${listaEsp}</ul>
+        </section>
+      </div>
+    </details>`;
+  }
+
   function telaEsquadrao(h, esqId) {
     const r = abrirRascunho(h, esqId);
     if (!r) { location.hash = `#h-${h.id}-esquadroes`; return; }
@@ -627,6 +683,7 @@
         </div>
         <div class="campo"><span>Oponentes</span><strong style="font-size:22px">${e.oponentes.length}</strong></div>
       </div>
+      ${colaDoMestre(e)}
       <div class="lista-oponentes">
         ${e.oponentes.map((op, i) => cartaoOponente(op, i, e.oponentes.length, e.jogadores)).join("")}
         <button class="adicionar-grande" type="button" data-acao="explorar">＋ Escolher moldes pra este esquadrão</button>

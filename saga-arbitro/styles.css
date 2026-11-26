@@ -452,6 +452,34 @@ body.na-entrada .rodape__secao { display: none; }
 }
 .adicionar-grande:hover { background: var(--papel-3); color: var(--tinta); }
 
+/* cola do mestre */
+.cola { margin-bottom: 26px; border: 2px solid var(--tinta); border-radius: 8px; background: var(--petroleo-claro); box-shadow: 4px 4px 0 var(--tinta); }
+.cola summary { cursor: pointer; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; padding: 10px 16px; list-style: none; }
+.cola summary::-webkit-details-marker { display: none; }
+.cola summary::before { content: "▸"; color: var(--petroleo); font-weight: 800; transition: rotate .15s; }
+.cola[open] summary::before { rotate: 90deg; }
+.cola summary span { font-size: 13px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; }
+.cola summary small { font-style: italic; color: var(--tinta-2); font-size: 13px; }
+.cola__corpo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 0; border-top: 2px solid var(--tinta); background: var(--papel-2); border-radius: 0 0 6px 6px; }
+.cola__corpo section { padding: 12px 16px 14px; min-width: 0; }
+.cola__corpo section + section { border-left: 2px dashed var(--tracejado); }
+.cola h3 { margin: 0 0 4px; font-size: 11px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: var(--petroleo); }
+.cola__nota { margin: 0 0 8px; font-size: 12px; color: var(--tinta-2); }
+.cola__nota b { color: var(--tinta); }
+.cola ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.cola__naipes li { display: grid; grid-template-columns: 86px 1fr; gap: 10px; padding: 5px 0; font-size: 13px; border-top: 1.5px dashed var(--tracejado); }
+.cola__especiais { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px !important; }
+.cola__esp { border: 1.5px solid var(--tinta); border-radius: 6px; padding: 8px 10px; background: var(--papel); font-size: 12.5px; display: grid; gap: 4px; }
+.cola__esp p { margin: 0; }
+.cola__esp-topo { display: flex; gap: 6px 8px; align-items: center; flex-wrap: wrap; }
+.cola__esp-topo b { font-size: 13.5px; }
+.cola__forma { font-size: 9.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; background: var(--petroleo); color: var(--papel); padding: 2px 6px; border-radius: 2px; }
+.cola__dono { margin-left: auto; font-size: 11px; font-style: italic; color: var(--apagado); }
+.cola__regra { color: var(--tinta-2); font-size: 12px; }
+.cola__regra b { color: var(--tinta); }
+.cola__vazio { font-size: 13px; color: var(--apagado); font-style: italic; }
+.cola .apagado { color: var(--apagado); }
+
 /* cartão compacto do esquadrão */
 .cartao--compacto { font-size: 13px; }
 .cartao--compacto .cartao__cabeca { padding: 7px 10px; gap: 8px; }
@@ -612,6 +640,8 @@ body.na-entrada .rodape__secao { display: none; }
   .explorador__principal { padding: 18px 16px 30px; }
   .explorador__grade, .combo-linhas { grid-template-columns: 1fr; }
   .placar { grid-template-columns: 1fr; }
+  .cola__corpo { grid-template-columns: 1fr; }
+  .cola__corpo section + section { border-left: 0; border-top: 2px dashed var(--tracejado); }
 }
 .combo-tela__cabeca .controle { justify-self: start; max-width: 100%; }
 .combo-tela__cabeca .segmentos { flex-wrap: wrap; }
