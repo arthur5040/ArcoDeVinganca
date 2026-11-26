@@ -132,9 +132,9 @@
   function novoEsquadrao() {
     return { id: novoId(), tema: "", jogadores: 4, oponentes: [], criado: agora(), atualizado: agora() };
   }
-  function novoOponente(moldeId) {
+  function novoOponente(moldeId, extra = {}) {
     const m = MOLDE[moldeId];
-    return {
+    return Object.assign({
       uid: novoId(),
       molde: moldeId,
       nome: m.nome_placeholder ? m.nome.replace("___", "").trim() + " …" : m.nome,
@@ -144,7 +144,7 @@
       frase: "",
       quer: "",
       nomesPecas: m.pecas.map(() => ""),
-    };
+    }, extra);
   }
   const historia = (id) => db.historias.find((h) => h.id === id);
   function tocar(h) { h.atualizada = agora(); }
@@ -226,9 +226,12 @@
   }
 
   /** Cartão do jeito que está no livro (todas as linhas, com FRACO+/MÉDIO+/FORTE+). */
-  function cartaoMolde(m, { selecionado = false } = {}) {
-    return `<article class="cartao escolhivel ${selecionado ? "sel" : ""}" data-acao="alternar-molde" data-molde="${m.id}" tabindex="0" role="button" aria-pressed="${selecionado}">
-      <span class="escolhivel__marca" aria-hidden="true">${selecionado ? "✓" : "+"}</span>
+  function cartaoMolde(m, { selecionado = false, estatico = false } = {}) {
+    const abre = estatico
+      ? `<article class="cartao" data-molde="${m.id}">`
+      : `<article class="cartao escolhivel ${selecionado ? "sel" : ""}" data-acao="alternar-molde" data-molde="${m.id}" tabindex="0" role="button" aria-pressed="${selecionado}">
+      <span class="escolhivel__marca" aria-hidden="true">${selecionado ? "✓" : "+"}</span>`;
+    return `${abre}
       <div class="cartao__cabeca">
         <span class="cartao__num">${m.numero}</span>
         <span class="cartao__nome">${esc(m.nome)}</span>
@@ -662,12 +665,22 @@
   }
 
   // ---------------------------------------------------------------- explorador de moldes
-  const exp = { aberto: false, cat: "todas", busca: "", sel: [] };
+  // view "moldes": a grade (com os Combos Prontos no fim) · view "combo": um preset aberto.
+  const exp = { aberto: false, cat: "todas", busca: "", sel: [], view: "moldes", combo: null, praCombo: false };
+  const COMBO = Object.fromEntries((M.combos || []).map((c) => [c.id, c]));
+  const ENCONTRO = Object.fromEntries((M.encontros || []).map((e) => [e.id, e]));
+  const PAPEL_NOME = { maioria: "Maioria", destaque: "Destaque", extra: "Extra" };
+
+  const semAcento = (t) => String(t).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const jogadoresAgora = () => (rascunho ? rascunho.dados.jogadores : 4);
 
   function abrirExplorador() {
     exp.aberto = true;
     exp.sel = [];
     exp.busca = "";
+    exp.view = "moldes";
+    exp.combo = null;
+    exp.praCombo = false;
     desenharExplorador();
     document.body.style.overflow = "hidden";
     setTimeout(() => $(".explorador__busca")?.focus(), 30);
@@ -678,52 +691,178 @@
     document.body.style.overflow = "";
   }
   function moldesFiltrados() {
-    const b = exp.busca.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    const b = semAcento(exp.busca.trim());
     return M.moldes.filter((m) => {
+      if (exp.cat === "combos") return false;
       if (exp.cat !== "todas" && m.categoria !== exp.cat) return false;
       if (!b) return true;
-      const alvo = [m.nome, m.resumo, m.na_luta, String(m.numero), ...m.pecas.map((p) => p.nome + " " + p.efeito)]
-        .join(" ").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-      return alvo.includes(b);
+      return semAcento([m.nome, m.resumo, m.na_luta, String(m.numero), ...m.pecas.map((p) => p.nome + " " + p.efeito)].join(" ")).includes(b);
     });
   }
+  function combosFiltrados() {
+    if (exp.praCombo) return [];
+    if (exp.cat !== "todas" && exp.cat !== "combos") return [];
+    const b = semAcento(exp.busca.trim());
+    return M.combos.filter((c) => !b || semAcento([c.nome, MOLDE[c.maioria].nome, MOLDE[c.destaque].nome].join(" ")).includes(b));
+  }
+
+  // --- combo (preset)
+  /** Quantidade e tier de Maioria/Destaque pela tabela "Quantos" da Referência do Árbitro. */
+  function aplicarEncontro(combo, encId) {
+    const enc = ENCONTRO[encId];
+    const col = Math.min(3, Math.max(0, jogadoresAgora() - 2));
+    combo.encontro = encId;
+    combo.linhas.forEach((l) => {
+      if (l.papel === "maioria") {
+        l.tier = enc.maioria.tier;
+        l.gangue = enc.maioria.gangue;
+        l.qtd = enc.maioria.qtd[col];
+      } else if (l.papel === "destaque") {
+        l.tier = enc.destaque ? enc.destaque.tier : "medio";
+        l.gangue = false;
+        l.qtd = enc.destaque ? enc.destaque.qtd : 0;
+      }
+    });
+  }
+  function abrirCombo(id) {
+    const c = COMBO[id];
+    exp.combo = {
+      id: c.id,
+      nome: c.nome,
+      encontro: "padrao",
+      linhas: [
+        { molde: c.maioria, papel: "maioria", tier: "medio", qtd: 1, gangue: false },
+        { molde: c.destaque, papel: "destaque", tier: "medio", qtd: 1, gangue: false },
+      ],
+    };
+    aplicarEncontro(exp.combo, "padrao");
+    exp.view = "combo";
+    exp.praCombo = false;
+    exp.sel = [];
+    desenharExplorador();
+  }
+  function totalCombo(combo) {
+    return combo.linhas.reduce((s, l) => s + l.qtd, 0);
+  }
+
+  function cartaoCombo(c) {
+    const a = MOLDE[c.maioria];
+    const d = MOLDE[c.destaque];
+    return `<article class="combo-ficha" data-acao="abrir-combo" data-combo="${c.id}" tabindex="0" role="button" aria-label="Abrir combo ${esc(c.nome)}">
+      <div class="combo-ficha__cabeca"><strong>${esc(c.nome)}</strong><span aria-hidden="true">→</span></div>
+      <div class="combo-ficha__linha"><span class="tag">Maioria</span><b>${esc(a.nome)}</b><span class="mono">${a.numero}</span></div>
+      <div class="combo-ficha__linha"><span class="tag tag--especial">Destaque</span><b>${esc(d.nome)}</b><span class="mono">${d.numero}</span></div>
+    </article>`;
+  }
+
   function gradeExplorador() {
+    if (exp.view === "combo") return telaCombo();
     const lista = moldesFiltrados();
-    if (!lista.length) return `<p class="vazio">Nenhum molde com “${esc(exp.busca)}”.</p>`;
+    const combos = combosFiltrados();
+    if (!lista.length && !combos.length) return `<p class="vazio">Nada com “${esc(exp.busca)}”.</p>`;
     let html = "";
+    if (exp.praCombo) {
+      html += `<div class="aviso-combo">Escolhendo moldes pra juntar ao combo <b>${esc(exp.combo.nome)}</b>. Clique nos cartões e depois em “Juntar ao combo”.</div>`;
+    }
     M.categorias.forEach((c) => {
       const daCat = lista.filter((m) => m.categoria === c.id);
       if (!daCat.length) return;
       html += `<div class="explorador__cat-titulo" id="cat-${c.id}"><strong>${c.numero} ${esc(c.nome)}</strong><em>${esc(c.descricao)}</em></div>`;
       html += daCat.map((m) => cartaoMolde(m, { selecionado: exp.sel.includes(m.id) })).join("");
     });
+    if (combos.length) {
+      html += `<div class="explorador__cat-titulo" id="cat-combos"><strong>♣ Combos prontos</strong><em>Maioria + Destaque. Referência do Árbitro, pág. 5</em></div>`;
+      html += `<div class="combos-grade">${combos.map(cartaoCombo).join("")}</div>`;
+    }
     return `<div class="explorador__grade">${html}</div>`;
   }
+
+  function telaCombo() {
+    const c = exp.combo;
+    const jog = jogadoresAgora();
+    const segEnc = M.encontros.map((e) =>
+      `<button type="button" data-acao="encontro" data-encontro="${e.id}" aria-pressed="${c.encontro === e.id}" title="${esc(e.descricao)}">${esc(e.nome)}</button>`).join("");
+    const enc = ENCONTRO[c.encontro];
+    const linhas = c.linhas.map((l, i) => {
+      const m = MOLDE[l.molde];
+      const segTier = ORDEM_TIER.map((id) =>
+        `<button type="button" data-acao="combo-tier" data-i="${i}" data-tier="${id}" aria-pressed="${l.tier === id}">${TIER[id].nome}</button>`).join("");
+      const gangue = l.tier === "fraco"
+        ? `<label class="checa"><input type="checkbox" data-campo="combo-gangue" data-i="${i}" ${l.gangue ? "checked" : ""}> Gangue (${jog} membros)</label>` : "";
+      return `<div class="combo-linha ${l.qtd === 0 ? "combo-linha--fora" : ""}">
+        <div class="combo-linha__barra">
+          <span class="combo-linha__papel combo-linha__papel--${l.papel}">${PAPEL_NOME[l.papel]}</span>
+          <div class="controle"><span>Quantos</span>
+            <div class="contador">
+              <button type="button" data-acao="combo-qtd" data-i="${i}" data-delta="-1" aria-label="Menos um ${esc(m.nome)}">−</button>
+              <output>${l.qtd}</output>
+              <button type="button" data-acao="combo-qtd" data-i="${i}" data-delta="1" aria-label="Mais um ${esc(m.nome)}">+</button>
+            </div>
+          </div>
+          <div class="controle"><span>Tier</span><div class="segmentos">${segTier}</div></div>
+          ${gangue}
+          ${l.papel === "extra" ? `<button class="btn btn--mini" type="button" data-acao="combo-remover" data-i="${i}">Tirar</button>` : ""}
+        </div>
+        ${cartaoMolde(m, { estatico: true })}
+      </div>`;
+    }).join("");
+    return `<div class="combo-tela">
+      <button class="btn btn--leve" type="button" data-acao="voltar-moldes">← Todos os moldes e combos</button>
+      <div class="combo-tela__cabeca">
+        <h3>${esc(c.nome)}</h3>
+        <p>Maioria (iguais entre si) + Destaque. Quantos pela tabela da Referência do Árbitro, com <b>${jog} jogadores</b>.</p>
+        <div class="controle"><span>Que luta você quer?</span><div class="segmentos">${segEnc}</div></div>
+        <p class="combo-tela__enc"><b>${esc(enc.nome)}:</b> ${esc(enc.descricao)}.${c.linhas.some((l) => l.gangue) ? " Gangue é um cartão só, com 1 membro por jogador." : ""}</p>
+      </div>
+      <div class="combo-linhas">${linhas}</div>
+      <button class="adicionar-grande" type="button" data-acao="combo-mais-moldes">＋ Adicionar mais moldes a esse grupo</button>
+    </div>`;
+  }
+
   function peExplorador() {
+    if (exp.view === "combo") {
+      const t = totalCombo(exp.combo);
+      return `<div class="fichas-sel">${exp.combo.linhas.filter((l) => l.qtd > 0).map((l) =>
+          `<span class="fichinha">${l.qtd}× ${esc(MOLDE[l.molde].nome)} · ${TIER[l.tier].nome}${l.tier === "fraco" && l.gangue ? " (Gangue)" : ""}</span>`).join("")}</div>
+        <button class="btn btn--leve" type="button" data-acao="fechar-explorador">Cancelar</button>
+        <button class="btn btn--vermelho" type="button" data-acao="adicionar-combo" ${t ? "" : "disabled"}>Adicionar ao esquadrão (${t})</button>`;
+    }
+    if (exp.praCombo) {
+      return `<div class="fichas-sel">${exp.sel.map((id) => `<span class="fichinha">${esc(MOLDE[id].nome)}</span>`).join("") || `<span class="mono">Escolha os moldes que vão entrar no combo.</span>`}</div>
+        <button class="btn btn--leve" type="button" data-acao="voltar-combo">Voltar pro combo</button>
+        <button class="btn btn--vermelho" type="button" data-acao="juntar-ao-combo" ${exp.sel.length ? "" : "disabled"}>Juntar ao combo (${exp.sel.length})</button>`;
+    }
     return `<div class="fichas-sel">${exp.sel.length
       ? exp.sel.map((id) => `<span class="fichinha">${esc(MOLDE[id].nome)}</span>`).join("")
-      : `<span class="mono">Clique nos cartões pra escolher. Dá pra pegar vários.</span>`}</div>
+      : `<span class="mono">Clique nos cartões pra escolher, ou abra um combo pronto lá embaixo.</span>`}</div>
       <button class="btn btn--leve" type="button" data-acao="fechar-explorador">Cancelar</button>
       <button class="btn btn--vermelho" type="button" data-acao="adicionar-moldes" ${exp.sel.length ? "" : "disabled"}>Adicionar ao esquadrão (${exp.sel.length})</button>`;
   }
   function desenharExplorador() {
-    const cats = [["todas", "★", "Todos", "os 36 moldes"], ...M.categorias.map((c) => [c.id, c.numero, c.nome, c.descricao])];
+    const cats = [["todas", "★", "Todos", "moldes e combos"], ...M.categorias.map((c) => [c.id, c.numero, c.nome, c.descricao])];
+    if (!exp.praCombo) cats.push(["combos", "♣", "Combos prontos", "Maioria + Destaque"]);
+    const ativa = exp.view === "combo" ? "combos" : exp.cat;
     modalRaiz.innerHTML = `<div class="explorador" role="dialog" aria-modal="true" aria-label="Moldes">
       <div class="explorador__topo">
-        <h2>Moldes<small>36 jeitos de lutar. Escolha, dê um tema, jogue.</small></h2>
-        <input class="entrada-texto explorador__busca" type="search" data-campo="busca" placeholder="Buscar: veneno, voador, 34…" value="${esc(exp.busca)}">
-        <button class="btn btn--mini" type="button" data-acao="d66" title="Rolar um molde aleatório">Rolar d66</button>
+        <h2>Moldes<small>${exp.praCombo ? "juntando ao combo " + esc(exp.combo.nome) : "36 jeitos de lutar e 21 combos prontos."}</small></h2>
+        ${exp.view === "combo" ? "" : `<input class="entrada-texto explorador__busca" type="search" data-campo="busca" placeholder="Buscar: veneno, voador, Tumba…" value="${esc(exp.busca)}">
+        <button class="btn btn--mini" type="button" data-acao="d66" title="Rolar um molde aleatório">Rolar d66</button>`}
         <button class="btn btn--mini btn--escuro" type="button" data-acao="fechar-explorador" aria-label="Fechar">✕</button>
       </div>
       <nav class="explorador__lado" aria-label="Categorias">
-        ${cats.map(([id, n, nome, desc]) => `<button type="button" class="cat-btn" data-acao="cat" data-cat="${id}" aria-pressed="${exp.cat === id}"><b>${n}</b><strong>${esc(nome)}</strong><small>${esc(desc)}</small></button>`).join("")}
+        ${cats.map(([id, n, nome, desc]) => `<button type="button" class="cat-btn" data-acao="cat" data-cat="${id}" aria-pressed="${ativa === id}"><b>${n}</b><strong>${esc(nome)}</strong><small>${esc(desc)}</small></button>`).join("")}
       </nav>
       <div class="explorador__principal" id="exp-grade">${gradeExplorador()}</div>
       <div class="explorador__pe" id="exp-pe">${peExplorador()}</div>
     </div>`;
   }
   function atualizarExplorador({ grade = true } = {}) {
-    if (grade) $("#exp-grade").innerHTML = gradeExplorador();
+    if (grade) {
+      const el = $("#exp-grade");
+      const y = el.scrollTop;
+      el.innerHTML = gradeExplorador();
+      el.scrollTop = y;
+    }
     $("#exp-pe").innerHTML = peExplorador();
   }
 
@@ -1094,6 +1233,7 @@
         break;
       case "cat":
         exp.cat = alvo.dataset.cat;
+        exp.view = "moldes";
         desenharExplorador();
         $("#exp-grade").scrollTop = 0;
         break;
@@ -1113,11 +1253,88 @@
         const m = M.moldes.find((x) => x.numero === a * 10 + b);
         exp.cat = "todas";
         exp.busca = "";
+        exp.view = "moldes";
         if (!exp.sel.includes(m.id)) exp.sel.push(m.id);
         desenharExplorador();
         const card = $(`#exp-grade [data-molde="${m.id}"]`);
         card?.scrollIntoView({ block: "center", behavior: "smooth" });
         toast(`d66: ${a}·${b} → ${m.nome}`);
+        break;
+      }
+      case "abrir-combo":
+        abrirCombo(alvo.dataset.combo);
+        break;
+      case "voltar-moldes":
+        exp.view = "moldes";
+        exp.combo = null;
+        exp.cat = "todas";
+        desenharExplorador();
+        $("#cat-combos")?.scrollIntoView({ block: "start" });
+        break;
+      case "encontro":
+        aplicarEncontro(exp.combo, alvo.dataset.encontro);
+        atualizarExplorador();
+        break;
+      case "combo-tier": {
+        const l = exp.combo.linhas[+alvo.dataset.i];
+        l.tier = alvo.dataset.tier;
+        if (l.tier !== "fraco") l.gangue = false;
+        atualizarExplorador();
+        break;
+      }
+      case "combo-qtd": {
+        const l = exp.combo.linhas[+alvo.dataset.i];
+        l.qtd = Math.min(12, Math.max(0, l.qtd + +alvo.dataset.delta));
+        atualizarExplorador();
+        break;
+      }
+      case "combo-remover":
+        exp.combo.linhas.splice(+alvo.dataset.i, 1);
+        atualizarExplorador();
+        break;
+      case "combo-mais-moldes":
+        exp.view = "moldes";
+        exp.praCombo = true;
+        exp.cat = "todas";
+        exp.busca = "";
+        exp.sel = [];
+        desenharExplorador();
+        break;
+      case "voltar-combo":
+        exp.view = "combo";
+        exp.praCombo = false;
+        exp.sel = [];
+        desenharExplorador();
+        break;
+      case "juntar-ao-combo": {
+        const n = exp.sel.length;
+        exp.sel.forEach((id) => exp.combo.linhas.push({ molde: id, papel: "extra", tier: "medio", qtd: 1, gangue: false }));
+        exp.view = "combo";
+        exp.praCombo = false;
+        exp.sel = [];
+        desenharExplorador();
+        const g = $("#exp-grade");
+        g.scrollTop = g.scrollHeight;
+        toast(`${n} ${n === 1 ? "molde entrou" : "moldes entraram"} no combo.`);
+        break;
+      }
+      case "adicionar-combo": {
+        if (!rascunho) break;
+        const c = exp.combo;
+        let n = 0;
+        c.linhas.forEach((l) => {
+          for (let k = 1; k <= l.qtd; k++) {
+            const op = novoOponente(l.molde, { tier: l.tier, gangue: l.tier === "fraco" && l.gangue });
+            if (l.qtd > 1) op.nome = `${op.nome} ${k}`;
+            rascunho.dados.oponentes.push(op);
+            n++;
+          }
+        });
+        if (!rascunho.dados.tema.trim()) rascunho.dados.tema = c.nome;
+        fecharExplorador();
+        marcarSujo();
+        rerenderEditor();
+        toast(`Combo ${c.nome}: ${n} ${n === 1 ? "oponente adicionado" : "oponentes adicionados"}. Não esqueça de salvar.`);
         break;
       }
       case "adicionar-moldes": {
@@ -1140,7 +1357,7 @@
       else if (modalRaiz.innerHTML) fecharModal();
       return;
     }
-    if ((ev.key === "Enter" || ev.key === " ") && ev.target.matches?.(".escolhivel")) {
+    if ((ev.key === "Enter" || ev.key === " ") && ev.target.matches?.(".escolhivel, .combo-ficha")) {
       ev.preventDefault();
       ev.target.click();
     }
@@ -1235,6 +1452,11 @@
 
   document.addEventListener("change", (ev) => {
     const el = ev.target;
+    if (el.dataset?.campo === "combo-gangue" && exp.combo) {
+      exp.combo.linhas[+el.dataset.i].gangue = el.checked;
+      atualizarExplorador();
+      return;
+    }
     if (el.dataset?.campo === "gangue") {
       const [op] = oponenteDe(el);
       if (!op) return;

@@ -504,6 +504,40 @@ body.na-entrada .rodape__secao { display: none; }
 .explorador__pe .btn--leve { color: var(--papel); }
 .explorador__pe .btn--leve:hover { background: rgba(255,255,255,.1); }
 
+/* ---------- combos prontos ---------- */
+.combos-grade { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+.combo-ficha {
+  border: 2px solid var(--tinta); border-radius: 8px; background: var(--papel-2); box-shadow: 5px 5px 0 var(--petroleo);
+  cursor: pointer; overflow: hidden; transition: transform .1s, box-shadow .1s;
+}
+.combo-ficha:hover, .combo-ficha:focus-visible { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--vermelho); }
+.combo-ficha__cabeca { background: var(--tinta); color: var(--papel); padding: 9px 12px; display: flex; justify-content: space-between; gap: 8px; }
+.combo-ficha__cabeca strong { font-size: 14px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.combo-ficha__cabeca span { color: var(--vermelho-claro); font-weight: 800; }
+.combo-ficha__linha { display: grid; grid-template-columns: 74px 1fr auto; gap: 10px; align-items: center; padding: 7px 12px; font-size: 14px; }
+.combo-ficha__linha + .combo-ficha__linha { border-top: 1.5px dashed var(--tracejado); }
+.combo-ficha__linha .mono { color: var(--apagado); font-size: 12px; }
+.aviso-combo { grid-column: 1 / -1; border-left: 4px solid var(--vermelho); background: var(--papel-2); padding: 10px 14px; font-size: 14px; }
+.combo-tela { display: grid; gap: 20px; max-width: 1100px; }
+.combo-tela > .btn--leve { justify-self: start; }
+.combo-tela__cabeca { display: grid; gap: 10px; border-bottom: 3px solid var(--tinta); padding-bottom: 16px; }
+.combo-tela__cabeca h3 { margin: 0; font-size: clamp(28px, 4vw, 42px); font-weight: 800; text-transform: uppercase; line-height: 1; }
+.combo-tela__cabeca p { margin: 0; color: var(--tinta-2); }
+.combo-tela__enc { font-size: 14px; }
+.combo-tela__cabeca .segmentos button[aria-pressed="true"] { background: var(--vermelho); color: var(--papel-2); }
+.combo-linhas { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 26px 24px; align-items: start; }
+.combo-linha { display: grid; gap: 0; min-width: 0; }
+.combo-linha--fora .cartao { opacity: .45; }
+.combo-linha__barra {
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; padding: 12px; background: var(--papel-3);
+  border: 2px solid var(--tinta); border-bottom: 0; border-radius: 8px 8px 0 0;
+}
+.combo-linha__papel { align-self: center; font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; padding: 4px 8px; border-radius: 3px; background: var(--tinta); color: var(--papel); }
+.combo-linha__papel--destaque { background: var(--vermelho); }
+.combo-linha__papel--extra { background: var(--petroleo); }
+.combo-linha .contador button { height: 32px; width: 32px; }
+.combo-linha .contador output { font-size: 16px; min-width: 28px; }
+
 /* ---------- toast ---------- */
 .toast {
   position: fixed; left: 50%; bottom: 90px; translate: -50% 20px; z-index: 80; opacity: 0; pointer-events: none;
@@ -542,6 +576,8 @@ body.na-entrada .rodape__secao { display: none; }
   .cat-btn { grid-template-columns: auto; white-space: nowrap; }
   .cat-btn b, .cat-btn small { display: none; }
   .explorador__principal { padding: 18px 16px 30px; }
-  .explorador__grade { grid-template-columns: 1fr; }
+  .explorador__grade, .combo-linhas { grid-template-columns: 1fr; }
   .placar { grid-template-columns: 1fr; }
 }
+.combo-tela__cabeca .controle { justify-self: start; max-width: 100%; }
+.combo-tela__cabeca .segmentos { flex-wrap: wrap; }

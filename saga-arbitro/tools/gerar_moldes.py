@@ -43,6 +43,51 @@ CATEGORIAS = [
 ]
 
 
+# Referência do Árbitro, pág. 5: Combos Prontos (Maioria + Destaque).
+COMBOS = [
+    ("Briga de Bar", "brutamontes", "ladrao"),
+    ("Fogo Cruzado", "atirador", "atropelador"),
+    ("Escudos à Frente", "escudeiro", "bombardeiro"),
+    ("Horda", "imortal", "explosivo"),
+    ("Ritual", "guarda", "invocador"),
+    ("Caçada", "furtivo", "cacador"),
+    ("Debaixo da Terra", "escavador", "engolidor"),
+    ("Corpo Roubado", "imitador", "possessor"),
+    ("Arena", "duelista", "domador"),
+    ("Portão do Castelo", "sentinela", "gigante"),
+    ("Revoada", "voador", "pescador"),
+    ("Floresta Viva", "espinhoso", "elementalista"),
+    ("Tumba", "imortal", "amaldicoador"),
+    ("Assalto ao Trem", "atropelador", "atirador"),
+    ("Baile de Máscaras", "trapaceiro", "furtivo"),
+    ("Seita em Transe", "berserker", "hipnotizador"),
+    ("Castelo Vampiro", "enxame", "sanguessuga"),
+    ("Circo Macabro", "cuspidor", "trapaceiro"),
+    ("Barril de Pólvora", "explosivo", "comandante"),
+    ("Abordagem", "pescador", "brutamontes"),
+    ("Matador Mascarado", "armadilheiro", "intocavel"),
+]
+
+# Referência do Árbitro, pág. 5: "Quantos" (Maioria + Destaque, por nº de jogadores 2, 3, 4, 5).
+ENCONTROS = [
+    {"id": "aquecimento", "nome": "Aquecimento", "descricao": "só Gangue",
+     "maioria": {"tier": "fraco", "gangue": True, "qtd": [1, 1, 1, 1]}, "destaque": None},
+    {"id": "padrao", "nome": "Padrão", "descricao": "todos Médios",
+     "maioria": {"tier": "medio", "gangue": False, "qtd": [1, 2, 3, 4]}, "destaque": {"tier": "medio", "qtd": 1}},
+    {"id": "dificil", "nome": "Difícil", "descricao": "Médios + 1 Forte",
+     "maioria": {"tier": "medio", "gangue": False, "qtd": [1, 1, 2, 2]}, "destaque": {"tier": "forte", "qtd": 1}},
+    {"id": "chefe", "nome": "Chefe", "descricao": "Gangue + 1 Chefão",
+     "maioria": {"tier": "fraco", "gangue": True, "qtd": [1, 1, 1, 1]}, "destaque": {"tier": "chefao", "qtd": 1}},
+]
+
+
+def slug(txt):
+    import unicodedata
+    t = unicodedata.normalize("NFD", txt.lower())
+    t = "".join(c for c in t if unicodedata.category(c) != "Mn")
+    return re.sub(r"[^a-z0-9]+", "-", t).strip("-")
+
+
 def naipes_de(texto):
     achados = []
     for m in re.finditer(r"(Caído|Atordoado|Ardendo|Exposto)(!?)", texto):
@@ -171,7 +216,12 @@ def main():
         "formas_do_especial": FORMAS_ESPECIAL,
         "categorias": CATEGORIAS,
         "moldes": moldes,
+        "combos": [{"id": slug(n), "nome": n, "maioria": a, "destaque": d} for n, a, d in COMBOS],
+        "encontros": ENCONTROS,
     }
+    ids = {m["id"] for m in moldes}
+    for c in dados["combos"]:
+        assert c["maioria"] in ids and c["destaque"] in ids, c
     texto = json.dumps(dados, ensure_ascii=False, indent=2)
     (RAIZ / "saga_moldes.json").write_text(texto + "\n", encoding="utf-8")
     (RAIZ / "moldes.js").write_text(

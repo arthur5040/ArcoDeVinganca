@@ -3062,5 +3062,208 @@
         }
       ]
     }
+  ],
+  "combos": [
+    {
+      "id": "briga-de-bar",
+      "nome": "Briga de Bar",
+      "maioria": "brutamontes",
+      "destaque": "ladrao"
+    },
+    {
+      "id": "fogo-cruzado",
+      "nome": "Fogo Cruzado",
+      "maioria": "atirador",
+      "destaque": "atropelador"
+    },
+    {
+      "id": "escudos-a-frente",
+      "nome": "Escudos à Frente",
+      "maioria": "escudeiro",
+      "destaque": "bombardeiro"
+    },
+    {
+      "id": "horda",
+      "nome": "Horda",
+      "maioria": "imortal",
+      "destaque": "explosivo"
+    },
+    {
+      "id": "ritual",
+      "nome": "Ritual",
+      "maioria": "guarda",
+      "destaque": "invocador"
+    },
+    {
+      "id": "cacada",
+      "nome": "Caçada",
+      "maioria": "furtivo",
+      "destaque": "cacador"
+    },
+    {
+      "id": "debaixo-da-terra",
+      "nome": "Debaixo da Terra",
+      "maioria": "escavador",
+      "destaque": "engolidor"
+    },
+    {
+      "id": "corpo-roubado",
+      "nome": "Corpo Roubado",
+      "maioria": "imitador",
+      "destaque": "possessor"
+    },
+    {
+      "id": "arena",
+      "nome": "Arena",
+      "maioria": "duelista",
+      "destaque": "domador"
+    },
+    {
+      "id": "portao-do-castelo",
+      "nome": "Portão do Castelo",
+      "maioria": "sentinela",
+      "destaque": "gigante"
+    },
+    {
+      "id": "revoada",
+      "nome": "Revoada",
+      "maioria": "voador",
+      "destaque": "pescador"
+    },
+    {
+      "id": "floresta-viva",
+      "nome": "Floresta Viva",
+      "maioria": "espinhoso",
+      "destaque": "elementalista"
+    },
+    {
+      "id": "tumba",
+      "nome": "Tumba",
+      "maioria": "imortal",
+      "destaque": "amaldicoador"
+    },
+    {
+      "id": "assalto-ao-trem",
+      "nome": "Assalto ao Trem",
+      "maioria": "atropelador",
+      "destaque": "atirador"
+    },
+    {
+      "id": "baile-de-mascaras",
+      "nome": "Baile de Máscaras",
+      "maioria": "trapaceiro",
+      "destaque": "furtivo"
+    },
+    {
+      "id": "seita-em-transe",
+      "nome": "Seita em Transe",
+      "maioria": "berserker",
+      "destaque": "hipnotizador"
+    },
+    {
+      "id": "castelo-vampiro",
+      "nome": "Castelo Vampiro",
+      "maioria": "enxame",
+      "destaque": "sanguessuga"
+    },
+    {
+      "id": "circo-macabro",
+      "nome": "Circo Macabro",
+      "maioria": "cuspidor",
+      "destaque": "trapaceiro"
+    },
+    {
+      "id": "barril-de-polvora",
+      "nome": "Barril de Pólvora",
+      "maioria": "explosivo",
+      "destaque": "comandante"
+    },
+    {
+      "id": "abordagem",
+      "nome": "Abordagem",
+      "maioria": "pescador",
+      "destaque": "brutamontes"
+    },
+    {
+      "id": "matador-mascarado",
+      "nome": "Matador Mascarado",
+      "maioria": "armadilheiro",
+      "destaque": "intocavel"
+    }
+  ],
+  "encontros": [
+    {
+      "id": "aquecimento",
+      "nome": "Aquecimento",
+      "descricao": "só Gangue",
+      "maioria": {
+        "tier": "fraco",
+        "gangue": true,
+        "qtd": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "destaque": null
+    },
+    {
+      "id": "padrao",
+      "nome": "Padrão",
+      "descricao": "todos Médios",
+      "maioria": {
+        "tier": "medio",
+        "gangue": false,
+        "qtd": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "destaque": {
+        "tier": "medio",
+        "qtd": 1
+      }
+    },
+    {
+      "id": "dificil",
+      "nome": "Difícil",
+      "descricao": "Médios + 1 Forte",
+      "maioria": {
+        "tier": "medio",
+        "gangue": false,
+        "qtd": [
+          1,
+          1,
+          2,
+          2
+        ]
+      },
+      "destaque": {
+        "tier": "forte",
+        "qtd": 1
+      }
+    },
+    {
+      "id": "chefe",
+      "nome": "Chefe",
+      "descricao": "Gangue + 1 Chefão",
+      "maioria": {
+        "tier": "fraco",
+        "gangue": true,
+        "qtd": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "destaque": {
+        "tier": "chefao",
+        "qtd": 1
+      }
+    }
   ]
 }

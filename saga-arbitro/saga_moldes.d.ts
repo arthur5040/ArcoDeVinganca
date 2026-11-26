@@ -70,6 +70,22 @@ export interface Categoria {
   pagina: number;            // página no Livro de Oponentes
 }
 
+// Referência do Árbitro, pág. 5 — Combos Prontos e a tabela "Quantos".
+export interface Combo {
+  id: string;
+  nome: string;
+  maioria: string;           // id do molde que vem em maior número
+  destaque: string;          // id do molde que vem um só
+}
+
+export interface Encontro {
+  id: "aquecimento" | "padrao" | "dificil" | "chefe";
+  nome: string;
+  descricao: string;
+  maioria: { tier: TierId; gangue: boolean; qtd: [number, number, number, number] }; // por 2, 3, 4, 5 jogadores
+  destaque: { tier: TierId; qtd: number } | null;
+}
+
 export interface SagaMoldes {
   sistema: "SAGA";
   versao: string;
@@ -79,4 +95,6 @@ export interface SagaMoldes {
   formas_do_especial: { id: string; nome: FormaEspecial; acontece: string; pela_metade: string }[];
   categorias: Categoria[];
   moldes: Molde[];
+  combos: Combo[];
+  encontros: Encontro[];
 }
