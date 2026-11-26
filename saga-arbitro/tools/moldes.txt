@@ -1,0 +1,299 @@
+# Fonte: SAGA 0.7 — Livro de Oponentes, págs. 10–16. Transcrito à mão.
+# Formato: "@ numero | id | Nome | categoria | posicao", depois resumo/luta/naopega e as 4 peças.
+# G = Golpe (o 1º é FRACO+, o 2º MÉDIO+), R = Resposta (MÉDIO+), E = Especial (FORTE+).
+# "texto (nota)" = nota em itálico. ">>" separa o "Para se". "*" no nome = item.
+
+@ 11 | brutamontes | Brutamontes | pancadaria | frente
+resumo: bate pesado e empurra
+luta: escolhe um alvo e vai em linha reta até um dos dois cair.
+naopega: Amplificar | é banha demais pra doer mais.
+G Pancada: D + Caído
+G Agarrão: Caído! + Atordoado
+R Ombrada: Caído
+E Pisão: D em todos adjacentes. >> alguém amarrar ou travar as pernas dele.
+
+@ 12 | espinhoso | Espinhoso | pancadaria | frente
+resumo: machuca quem bate nele
+luta: quem acerta ele corpo a corpo fica Ardendo.
+G Abraço de Espinhos: D + Caído
+G Chuva de Farpas: Ardendo! + Atordoado
+R Farpa: Exposto (a arma fica presa nos espinhos)
+E Campo de Espinhos (Terreno): o chão a 2 espaços dele vira espinho até o “Para se”. Quem começa o turno ali fica Ardendo. >> alguém jogar algo grande em cima dele.
+
+@ 13 | berserker | Berserker | pancadaria | frente
+resumo: mais perigoso quando ferido
+luta: Ferido, move o dobro e não rola Moral.
+G Machadada: D + Atordoado
+G Urro de Guerra: Atordoado! + Caído
+R "MAIS!": Atordoado
+E Fúria Cega: D em todos adjacentes, aliados dele inclusive. >> alguém tirar o alvo dele de vista.
+
+@ 14 | duelista | Duelista | pancadaria | frente
+resumo: apara o golpe e responde
+luta: só ataca quem atacou ele por último. Ignora o resto.
+naopega: Desarmar | a espada nunca sai da mão dele.
+G Estocada: D + Exposto
+G Finta: Atordoado! + Caído
+R Aparar: Exposto (apara e abre sua guarda)
+E Mil Cortes: D em todos a 2 espaços. >> alguém desafiar ele pra um duelo.
+
+@ 15 | atropelador | Atropelador | pancadaria | frente
+resumo: carrega em linha reta
+luta: sempre move em linha reta antes de bater, até o fim do movimento.
+G Carga: D + Caído
+G Chifrada: Ardendo! + Atordoado
+R Coice: Caído
+E Estouro: D em todos numa linha de 6 espaços. >> alguém pôr algo no caminho ou travar a montaria.
+
+@ 16 | gigante | Gigante | pancadaria | frente
+resumo: lento, mas alcança longe
+luta: alcança 2 espaços, mas move só 3.
+naopega: Travar | ninguém segura um gigante no lugar.
+G Varrida: D + Caído
+G Pegar e Sacudir: Exposto! + Atordoado
+R Bufada: Atordoado
+E Desabar: D numa área 3×3 à frente dele. >> alguém subir nele.
+
+@ 21 | atirador | Atirador | tiro | tras
+resumo: fica longe, atrás de cobertura
+luta: se alguém chega do lado dele, ele se afasta antes de atirar.
+G Tiro*: D + Exposto (acerta a mão)
+G Tiro no Pé*: Caído! + Atordoado
+R Tiro de Aviso: Atordoado
+E Chuva de Flechas: D na área que ele marcou ao anunciar. >> alguém chegar do lado dele.
+
+@ 22 | bombardeiro | Bombardeiro | tiro | tras
+resumo: mira o chão, não pessoas
+luta: prefere quem está colado num aliado.
+G Bomba*: D + Caído
+G Frasco de Fogo*: Ardendo! + Atordoado
+R Fumaça: Atordoado
+E Barril de Pólvora: D em todos a 2 espaços do barril. >> alguém apagar o pavio ou chutar o barril longe.
+
+@ 23 | cuspidor | Cuspidor | tiro | meio
+resumo: cospe veneno ou ácido e recua
+luta: fica a 3 espaços. Depois de cuspir, recua.
+G Cusparada Ácida: D + Exposto (corrói o escudo)
+G Gosma: Ardendo! + Caído (o alvo escorrega)
+R Respingo: Atordoado (nos olhos)
+E Jorro: D em todos num cone à frente dele. >> alguém tapar a boca dele.
+
+@ 24 | pescador | Pescador | tiro | tras
+resumo: puxa de longe
+luta: puxa quem está longe pra perto dos aliados dele.
+G Anzol*: D + Caído (fisgado e puxado até ele)
+G Linha Enrolada*: Roubo! (fisga a arma e puxa)
+R Puxão: Caído
+E Arrastão (Captura): quem está mais longe sai do mapa, enrolado na rede. Perde 1 de Vida todo turno e só age pra se soltar (Pleno sai). >> alguém cortar a linha principal.
+
+@ 25 | voador | Voador | tiro | meio
+resumo: só desce pra bater
+luta: fica fora de alcance. Corpo a corpo só acerta ele no turno em que ele desceu.
+G Rasante: D + Caído
+G Rapto: Caído! + Atordoado (larga o alvo longe do grupo)
+R Bater de Asas: Atordoado
+E Rapto (Captura): leva um até o ninho, e ele sai do mapa. Perde 1 de Vida todo turno e só age pra se soltar (Pleno sai). >> alguém prender as asas.
+
+@ 26 | sentinela | Sentinela | tiro | tras
+resumo: não se move e pune quem se mexe
+luta: não se move. Só ataca quem se moveu desde o último turno dele.
+G Raio: D + Atordoado
+G Raio Anulador: Roubo! (apaga um Sobrenatural do alvo)
+R Trava: Caído (paralisa no lugar)
+E Varredura (Pânico): Caído! + Exposto em todos que se moveram nesta rodada. O olho gira e trava quem se mexeu. >> alguém quebrar o olho, a lente ou o cristal dele.
+
+@ 31 | guarda | Guarda | terreno | frente
+resumo: protege uma zona
+luta: não sai da zona dele. Só ataca quem entra nela.
+G Ninguém Passa: D + Caído (empurrado pra fora)
+G Escudo na Cara: Atordoado! + Caído
+R Confisco: Exposto (empurra a guarda do alvo pro lado)
+E Zona Proibida: D em todos dentro da zona. >> alguém pegar o que ele guarda.
+
+@ 32 | engolidor | Engolidor | terreno | frente
+resumo: gruda e devora
+luta: gruda em quem bate nele e vai em quem está Caído.
+G Abocanhada: D + Caído
+G Suco Gástrico: Ardendo! + Exposto (derrete a armadura)
+R Arma Afunda: Exposto
+E Bocão (Captura): engole quem está Caído, ou o mais perto, e ele sai do mapa. Perde 1 de Vida todo turno e só age pra se soltar (Pleno sai). >> alguém fizer ele vomitar.
+
+@ 33 | hipnotizador | Hipnotizador | terreno | meio
+resumo: faz o alvo parar
+luta: não quer matar, quer que o alvo pare. Sempre tem um Quer que dá pra negociar.
+naopega: Zonear | ninguém mexe com a cabeça dele.
+G Canto: D + Atordoado
+G Hipnose: Caído! + Atordoado (o alvo anda até ele, em transe)
+R "Olha pra Mim": Atordoado
+E Coro (Pânico): Atordoado! + Caído em todos que conseguem ouvir. Todo mundo para, de boca aberta. >> alguém fizer mais barulho.
+
+@ 34 | armadilheiro | Armadilheiro | terreno | tras
+resumo: prepara o campo antes
+luta: antes da luta, marca 3 casas no mapa em segredo. Quem pisa nelas fica Caído.
+G Lança*: D + Atordoado
+G Arapuca: Caído! + Exposto
+R Estalo: Caído
+E Fio Mestre: D em todos sobre casas marcadas. >> alguém achar e cortar o fio.
+
+@ 35 | elementalista | Elementalista | terreno | tras
+resumo: muda o chão a cada turno
+luta: todo turno, escolhe uma área 3×3. Até o próximo turno dele, quem entra ali fica Caído (gelo, lama, vento).
+G Labareda: D + Atordoado
+G Brasas no Chão: Ardendo! + Caído
+R Rajada: Caído
+E Tempestade (Terreno): a sala inteira vira gelo, lama ou vendaval até o “Para se”. Quem começa o turno ali fica Caído. >> alguém quebrar o cajado ou o cristal dele.
+
+@ 36 | amaldicoador | Amaldiçoador | terreno | tras
+resumo: enfraquece de longe
+luta: fica longe e escolhe um alvo pra amaldiçoar a luta toda.
+G Toque Podre: D + Exposto
+G Maldição: Roubo! (cala a voz ou cega um olho)
+R Mau Olhado: Atordoado
+E Ritual (Pânico): Exposto! + Ardendo em todos dentro do círculo. >> alguém apagar o círculo ou as velas.
+
+@ 41 | curandeiro | Curandeiro | bando | tras
+resumo: mantém os aliados de pé
+luta: fica atrás de quem ele serve e nunca vem sozinho. Numa Gangue, cada 2 de cura traz um membro de volta.
+G Bênção: um aliado recupera 2
+G Praga: Atordoado! + Ardendo
+R Luz nos Olhos: Atordoado
+E Levanta! (Reforço): os aliados caídos dele voltam como uma Gangue de Fracos, 1 membro por jogador. >> alguém interromper o ritual.
+
+@ 42 | comandante | Comandante | bando | meio
+resumo: os aliados agem melhor
+luta: quando ele age, um aliado dele move 3 de graça.
+G Sabre*: D + Atordoado
+G "Cerquem!": Caído! + Atordoado
+R "Segurem a Linha!": Caído
+E "Reforços!" (Reforço): entra uma Gangue de Fracos do lado dele, 1 por jogador. A corneta toca e um pelotão entra correndo. >> alguém travar o estandarte ou calar a corneta.
+
+@ 43 | invocador | Invocador | bando | tras
+resumo: chama reforços
+luta: se tem menos de 2 lacaios (Fracos) em cena, chama 1 por turno, de graça. No máximo 3 por luta. Os lacaios contam como parte dele na receita de Encontros.
+G Raio Sombrio: D + Atordoado
+G Mãos do Chão: Caído! + Exposto
+R Correntes: Caído
+E Horda (Reforço): entra uma Gangue de Fracos no portal, 1 por jogador. >> alguém fechar o portal.
+
+@ 44 | escudeiro | Escudeiro | bando | frente
+resumo: se põe na frente de um aliado
+luta: fica colado num aliado. Ataque nesse aliado acerta o Escudeiro primeiro.
+G Escudada: D + Caído
+G Muralha de Escudo: Exposto! + Atordoado
+R Empurrão de Escudo: Caído
+E Avanço: D em todos à frente do escudo. >> alguém passar por trás dele.
+
+@ 45 | domador | Domador | bando | meio
+resumo: luta junto com uma fera
+luta: ele e a fera são um cartão só. Cada Golpe é dele ou da fera, de quem estiver mais perto do alvo.
+G Chicote ou Mordida: D + Caído
+G "Pega!": Roubo! (a fera arranca a arma com os dentes)
+R Rosnado: Atordoado
+E Debandada: D em todos no caminho da fera. >> alguém acalmar ou soltar a fera.
+
+@ 46 | enxame | Enxame de ___ | bando | frente
+resumo: muitos e pequenos, num cartão só
+luta: é sempre Gangue. Quem passa por dentro do enxame fica Atordoado.
+naopega: Travar | segura um, e o resto passa.
+G Ferroada: D + Atordoado
+G Nuvem: Atordoado! + Ardendo
+R Zumbido: Atordoado
+E Cobertor Vivo (Terreno): o enxame cobre o cômodo até o “Para se”. Quem começa o turno ali fica Ardendo. >> alguém fizer fumaça ou fogo.
+
+@ 51 | furtivo | Furtivo | emboscada | meio
+resumo: bate e some
+luta: depois do Golpe, some de vista. Volta em quem está sozinho.
+G Facada nas Costas: D + Atordoado
+G Lâmina Envenenada*: Ardendo! + Atordoado
+R Sumiço: Atordoado
+E Apagão (Terreno): as luzes apagam até o “Para se”. Quem começa o turno no escuro fica Atordoado. >> alguém acender a luz.
+
+@ 52 | cacador | Caçador | emboscada | meio
+resumo: marca uma presa
+luta: no começo da luta, marca uma presa. Ele e os aliados dele vão nela.
+G Marcar a Presa: D + Atordoado
+G Encurralar: Caído! + Exposto
+R Rasteira: Caído
+E Cerco (Reforço): entra uma Gangue de Fracos em volta da presa, 1 por jogador. A matilha sai do mato e fecha o círculo. >> alguém travar quem lidera a caçada.
+
+@ 53 | ladrao | Ladrão | emboscada | meio
+resumo: rouba e foge
+luta: depois de roubar, corre pra sair de cena. Se fugir, o que ele levou vai junto.
+G Facada e Furto: D + Exposto
+G Distrair e Roubar: Roubo! (enquanto você olha pro outro lado)
+R Bolso Batido: Exposto (você confere o bolso e baixa a guarda)
+E Chuva de Facas: D em todos a 2 espaços. >> alguém segurar ele pela gola.
+
+@ 54 | trapaceiro | Trapaceiro | emboscada | meio
+resumo: troca coisas e pessoas de lugar
+luta: uma vez por turno, de graça, troca de lugar com qualquer um que ele enxergue.
+G Faca Escondida: D + Atordoado
+G Troca-Troca: Caído! + Atordoado (teletransporta o alvo)
+R "Não Fui Eu": Caído (troca de lugar com quem rolou)
+E Casa de Espelhos (Pânico): Atordoado! + Caído em todos a 2 espaços. Ele troca todo mundo de lugar. >> alguém achar o verdadeiro entre as cópias.
+
+@ 55 | escavador | Escavador | emboscada | meio
+resumo: vem por baixo da terra
+luta: anda por baixo da terra. Só pode ser atacado no turno em que sai.
+G Bote de Baixo: D + Caído
+G Areia Movediça: Caído! + Atordoado
+R Terra nos Olhos: Atordoado
+E Desmoronamento (Terreno): o chão em cima dos túneis vira buraco até o “Para se”. Quem começa o turno ali fica Caído. >> alguém tampar ou inundar a saída.
+
+@ 56 | imitador | Imitador | emboscada | frente
+resumo: se passa por algo ou alguém
+luta: começa disfarçado (de porta, de baú, de um aliado) e se revela atacando quem chegar mais perto.
+G Bocada: D + Caído (puxa o alvo pra dentro)
+G Cópia: Roubo! (copia a perícia que o alvo usou e toma ela pra si)
+R Voz de Amigo: Caído (chama o alvo pro lado errado)
+E Espelho: D em todos. >> alguém usar uma perícia que ninguém usou nesta luta.
+
+@ 61 | imortal | Imortal | estranha | frente
+resumo: cai e levanta
+luta: quando cai, levanta no próximo turno dele com 2 de Vida, no máximo 2 vezes. Resolver o ponto fraco acaba com isso. Mostre o ponto fraco na cena antes da luta.
+naopega: Abalar | quem já morreu não tem medo.
+G Garra Podre: D + Caído
+G Grito do Além: Atordoado! + Exposto
+R Nem Doeu: Atordoado
+E Fúria do Túmulo: D em todos em volta dele. >> alguém atacar o ponto fraco.
+
+@ 62 | regenerador | Regenerador | estranha | frente
+resumo: cortou, nasce outro
+luta: no começo do turno dela, recupera 2, a menos que alguém tenha queimado uma ferida desde o último turno.
+G Mordida Tripla: D + Caído
+G Cuspe de Veneno: Ardendo! + Atordoado
+R Bote Lateral: Caído
+E Todas as Cabeças: D em todos a 2 espaços. >> alguém fizer as cabeças brigarem entre si.
+
+@ 63 | sanguessuga | Sanguessuga | estranha | frente
+resumo: rouba Vida pra si
+luta: vai em quem está mais ferido. Quando o Golpe de Dano acerta, ela recupera 2.
+G Presa: D + Atordoado
+G Sangria: Ardendo! + Caído (ela gruda)
+R Grudar: Caído
+E Banquete: D em todos abaixo da metade da Vida. >> alguém oferecer outro sangue pra ela beber.
+
+@ 64 | explosivo | Explosivo | estranha | frente
+resumo: explode e morre
+luta: corre pro maior grupo. Tem o Kabum em qualquer tier. Depois do Kabum, ele morre.
+naopega: Abalar | ele já veio pra morrer.
+G Cabeçada: D + Caído
+G Pavio Aceso: Atordoado! + Caído
+R Faísca: Atordoado
+E! Kabum: D + Ardendo em todos a 2 espaços. >> alguém apagar o pavio ou jogar ele na água.
+
+@ 65 | possessor | Possessor | estranha | meio
+resumo: toma o corpo de alguém
+luta: vive dentro de um hospedeiro (pessoa, animal, armadura). Quem bate nele bate no hospedeiro também. Se o hospedeiro é inocente, o grupo precisa expulsar o Possessor antes, com sal, reza, fogo ou o nome verdadeiro dele.
+G Mão Alheia: D + Atordoado
+G Possessão: Caído! + Exposto (o corpo do alvo anda sozinho)
+R Sussurro: Atordoado
+E Tomar o Corpo (Captura): puxa a alma de quem olha pra ele. O corpo cai e sai de jogo. Perde 1 de Vida todo turno e só age pra se soltar (Pleno sai). >> alguém disser o nome verdadeiro dele.
+
+@ 66 | intocavel | Intocável | estranha | frente
+resumo: imune a dano até achar a fraqueza
+luta: não toma dano até alguém descobrir a fraqueza dele (luz do sol, prata, o nome, um espelho). Os Naipes dos jogadores funcionam normal. Mostre uma pista antes da luta.
+G Toque Gelado: D + Atordoado
+G Atravessar: Caído! + Atordoado (passa através do alvo e derruba ele de frio)
+R Riso: Atordoado
+E Lamento (Pânico): Atordoado! + Exposto em todos no cômodo. O grito gela o sangue. >> alguém usar a fraqueza dele.

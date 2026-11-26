@@ -1,0 +1,3066 @@
+{
+  "sistema": "SAGA",
+  "versao": "0.7",
+  "fonte": "SAGA 0.7 — Livro de Oponentes, págs. 10–16",
+  "tiers": [
+    {
+      "id": "fraco",
+      "nome": "Fraco",
+      "vida": 2,
+      "vida_por_jogador": false,
+      "dano": 1,
+      "acoes": 1,
+      "pecas": "Golpe"
+    },
+    {
+      "id": "medio",
+      "nome": "Médio",
+      "vida": 5,
+      "vida_por_jogador": false,
+      "dano": 2,
+      "acoes": 1,
+      "pecas": "Golpe de Dano, Golpe de Naipes, Resposta"
+    },
+    {
+      "id": "forte",
+      "nome": "Forte",
+      "vida": 5,
+      "vida_por_jogador": true,
+      "dano": 3,
+      "acoes": 2,
+      "pecas": "Golpes, Resposta, Especial"
+    },
+    {
+      "id": "chefao",
+      "nome": "Chefão",
+      "vida": 6,
+      "vida_por_jogador": true,
+      "dano": 4,
+      "acoes": 2,
+      "pecas": "Golpes, Resposta, Especial"
+    }
+  ],
+  "naipes_do_oponente": [
+    {
+      "id": "caido",
+      "nome": "Caído",
+      "efeito": "O jogador não sai do lugar até o fim do próximo turno dele. Se quiser, o oponente empurra ele até 2 espaços antes."
+    },
+    {
+      "id": "atordoado",
+      "nome": "Atordoado",
+      "efeito": "A próxima rolagem do jogador tem Desvantagem."
+    },
+    {
+      "id": "ardendo",
+      "nome": "Ardendo",
+      "efeito": "Na hora, o jogador perde 1 de Vida. A Couraça não reduz."
+    },
+    {
+      "id": "exposto",
+      "nome": "Exposto",
+      "efeito": "O próximo golpe nele não pode ser defendido, só Interceptado."
+    }
+  ],
+  "formas_do_especial": [
+    {
+      "id": "explosao",
+      "nome": "Explosão",
+      "acontece": "Dano do tier em todos na área.",
+      "pela_metade": "Metade do dano."
+    },
+    {
+      "id": "panico",
+      "nome": "Pânico",
+      "acontece": "2 Naipes em todos na área, sem dano.",
+      "pela_metade": "Só o Naipe com !."
+    },
+    {
+      "id": "reforco",
+      "nome": "Reforço",
+      "acontece": "Entra uma Gangue de Fracos na área, um membro por jogador.",
+      "pela_metade": "Metade dos membros."
+    },
+    {
+      "id": "terreno",
+      "nome": "Terreno",
+      "acontece": "O lugar vira perigo até alguém fazer o \"Para se\". Quem começa o turno ali sofre o Naipe do cartão.",
+      "pela_metade": "Dura só até o fim da próxima rodada."
+    },
+    {
+      "id": "captura",
+      "nome": "Captura",
+      "acontece": "Um alvo é engolido, levado ou preso: sai do mapa e perde 1 de Vida todo turno. Só pode agir pra se soltar (Pleno sai), ou sai quando alguém faz o \"Para se\".",
+      "pela_metade": "O alvo só fica Caído."
+    }
+  ],
+  "categorias": [
+    {
+      "id": "pancadaria",
+      "numero": 1,
+      "nome": "Pancadaria",
+      "descricao": "corpo a corpo, sem rodeio",
+      "pagina": 11
+    },
+    {
+      "id": "tiro",
+      "numero": 2,
+      "nome": "Tiro de Longe",
+      "descricao": "atacam de longe, com paciência",
+      "pagina": 12
+    },
+    {
+      "id": "terreno",
+      "numero": 3,
+      "nome": "Terreno Perigoso",
+      "descricao": "o chão e o espaço viram arma",
+      "pagina": 13
+    },
+    {
+      "id": "bando",
+      "numero": 4,
+      "nome": "Em Bando",
+      "descricao": "um ajuda o outro",
+      "pagina": 14
+    },
+    {
+      "id": "emboscada",
+      "numero": 5,
+      "nome": "Emboscada",
+      "descricao": "somem, roubam, enganam",
+      "pagina": 15
+    },
+    {
+      "id": "estranha",
+      "numero": 6,
+      "nome": "Coisa Estranha",
+      "descricao": "regras próprias, difíceis de matar",
+      "pagina": 16
+    }
+  ],
+  "moldes": [
+    {
+      "id": "brutamontes",
+      "numero": 11,
+      "nome": "Brutamontes",
+      "categoria": "pancadaria",
+      "posicao": "frente",
+      "resumo": "bate pesado e empurra",
+      "na_luta": "escolhe um alvo e vai em linha reta até um dos dois cair.",
+      "nao_pega": {
+        "naipe": "Amplificar",
+        "motivo": "é banha demais pra doer mais."
+      },
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Pancada",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Agarrão",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Ombrada",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Pisão",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos adjacentes.",
+          "nota": null,
+          "para_se": "alguém amarrar ou travar as pernas dele."
+        }
+      ]
+    },
+    {
+      "id": "espinhoso",
+      "numero": 12,
+      "nome": "Espinhoso",
+      "categoria": "pancadaria",
+      "posicao": "frente",
+      "resumo": "machuca quem bate nele",
+      "na_luta": "quem acerta ele corpo a corpo fica Ardendo.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Abraço de Espinhos",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Chuva de Farpas",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Ardendo! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Farpa",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Exposto",
+          "nota": "a arma fica presa nos espinhos"
+        },
+        {
+          "tipo": "especial",
+          "nome": "Campo de Espinhos",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Terreno",
+          "efeito": "o chão a 2 espaços dele vira espinho até o “Para se”. Quem começa o turno ali fica Ardendo.",
+          "nota": null,
+          "para_se": "alguém jogar algo grande em cima dele."
+        }
+      ]
+    },
+    {
+      "id": "berserker",
+      "numero": 13,
+      "nome": "Berserker",
+      "categoria": "pancadaria",
+      "posicao": "frente",
+      "resumo": "mais perigoso quando ferido",
+      "na_luta": "Ferido, move o dobro e não rola Moral.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Machadada",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Urro de Guerra",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado! + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "\"MAIS!\"",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Fúria Cega",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos adjacentes, aliados dele inclusive.",
+          "nota": null,
+          "para_se": "alguém tirar o alvo dele de vista."
+        }
+      ]
+    },
+    {
+      "id": "duelista",
+      "numero": 14,
+      "nome": "Duelista",
+      "categoria": "pancadaria",
+      "posicao": "frente",
+      "resumo": "apara o golpe e responde",
+      "na_luta": "só ataca quem atacou ele por último. Ignora o resto.",
+      "nao_pega": {
+        "naipe": "Desarmar",
+        "motivo": "a espada nunca sai da mão dele."
+      },
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Estocada",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Exposto",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Finta",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado! + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Aparar",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Exposto",
+          "nota": "apara e abre sua guarda"
+        },
+        {
+          "tipo": "especial",
+          "nome": "Mil Cortes",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos a 2 espaços.",
+          "nota": null,
+          "para_se": "alguém desafiar ele pra um duelo."
+        }
+      ]
+    },
+    {
+      "id": "atropelador",
+      "numero": 15,
+      "nome": "Atropelador",
+      "categoria": "pancadaria",
+      "posicao": "frente",
+      "resumo": "carrega em linha reta",
+      "na_luta": "sempre move em linha reta antes de bater, até o fim do movimento.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Carga",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Chifrada",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Ardendo! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Coice",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Estouro",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos numa linha de 6 espaços.",
+          "nota": null,
+          "para_se": "alguém pôr algo no caminho ou travar a montaria."
+        }
+      ]
+    },
+    {
+      "id": "gigante",
+      "numero": 16,
+      "nome": "Gigante",
+      "categoria": "pancadaria",
+      "posicao": "frente",
+      "resumo": "lento, mas alcança longe",
+      "na_luta": "alcança 2 espaços, mas move só 3.",
+      "nao_pega": {
+        "naipe": "Travar",
+        "motivo": "ninguém segura um gigante no lugar."
+      },
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Varrida",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Pegar e Sacudir",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Exposto! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Bufada",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Desabar",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D numa área 3×3 à frente dele.",
+          "nota": null,
+          "para_se": "alguém subir nele."
+        }
+      ]
+    },
+    {
+      "id": "atirador",
+      "numero": 21,
+      "nome": "Atirador",
+      "categoria": "tiro",
+      "posicao": "tras",
+      "resumo": "fica longe, atrás de cobertura",
+      "na_luta": "se alguém chega do lado dele, ele se afasta antes de atirar.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Tiro*",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": true,
+          "efeito": "D + Exposto",
+          "nota": "acerta a mão"
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Tiro no Pé*",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": true,
+          "efeito": "Caído! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Tiro de Aviso",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Chuva de Flechas",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D na área que ele marcou ao anunciar.",
+          "nota": null,
+          "para_se": "alguém chegar do lado dele."
+        }
+      ]
+    },
+    {
+      "id": "bombardeiro",
+      "numero": 22,
+      "nome": "Bombardeiro",
+      "categoria": "tiro",
+      "posicao": "tras",
+      "resumo": "mira o chão, não pessoas",
+      "na_luta": "prefere quem está colado num aliado.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Bomba*",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": true,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Frasco de Fogo*",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": true,
+          "efeito": "Ardendo! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Fumaça",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Barril de Pólvora",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos a 2 espaços do barril.",
+          "nota": null,
+          "para_se": "alguém apagar o pavio ou chutar o barril longe."
+        }
+      ]
+    },
+    {
+      "id": "cuspidor",
+      "numero": 23,
+      "nome": "Cuspidor",
+      "categoria": "tiro",
+      "posicao": "meio",
+      "resumo": "cospe veneno ou ácido e recua",
+      "na_luta": "fica a 3 espaços. Depois de cuspir, recua.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Cusparada Ácida",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Exposto",
+          "nota": "corrói o escudo"
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Gosma",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Ardendo! + Caído",
+          "nota": "o alvo escorrega"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Respingo",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": "nos olhos"
+        },
+        {
+          "tipo": "especial",
+          "nome": "Jorro",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos num cone à frente dele.",
+          "nota": null,
+          "para_se": "alguém tapar a boca dele."
+        }
+      ]
+    },
+    {
+      "id": "pescador",
+      "numero": 24,
+      "nome": "Pescador",
+      "categoria": "tiro",
+      "posicao": "tras",
+      "resumo": "puxa de longe",
+      "na_luta": "puxa quem está longe pra perto dos aliados dele.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Anzol*",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": true,
+          "efeito": "D + Caído",
+          "nota": "fisgado e puxado até ele"
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "roubo",
+          "nome": "Linha Enrolada*",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [],
+          "roubo": true,
+          "item": true,
+          "efeito": "Roubo!",
+          "nota": "fisga a arma e puxa"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Puxão",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Arrastão",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Captura",
+          "efeito": "quem está mais longe sai do mapa, enrolado na rede. Perde 1 de Vida todo turno e só age pra se soltar (Pleno sai).",
+          "nota": null,
+          "para_se": "alguém cortar a linha principal."
+        }
+      ]
+    },
+    {
+      "id": "voador",
+      "numero": 25,
+      "nome": "Voador",
+      "categoria": "tiro",
+      "posicao": "meio",
+      "resumo": "só desce pra bater",
+      "na_luta": "fica fora de alcance. Corpo a corpo só acerta ele no turno em que ele desceu.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Rasante",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Rapto",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Atordoado",
+          "nota": "larga o alvo longe do grupo"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Bater de Asas",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Rapto",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Captura",
+          "efeito": "leva um até o ninho, e ele sai do mapa. Perde 1 de Vida todo turno e só age pra se soltar (Pleno sai).",
+          "nota": null,
+          "para_se": "alguém prender as asas."
+        }
+      ]
+    },
+    {
+      "id": "sentinela",
+      "numero": 26,
+      "nome": "Sentinela",
+      "categoria": "tiro",
+      "posicao": "tras",
+      "resumo": "não se move e pune quem se mexe",
+      "na_luta": "não se move. Só ataca quem se moveu desde o último turno dele.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Raio",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "roubo",
+          "nome": "Raio Anulador",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [],
+          "roubo": true,
+          "item": false,
+          "efeito": "Roubo!",
+          "nota": "apaga um Sobrenatural do alvo"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Trava",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": "paralisa no lugar"
+        },
+        {
+          "tipo": "especial",
+          "nome": "Varredura",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Pânico",
+          "efeito": "Caído! + Exposto em todos que se moveram nesta rodada. O olho gira e trava quem se mexeu.",
+          "nota": null,
+          "para_se": "alguém quebrar o olho, a lente ou o cristal dele."
+        }
+      ]
+    },
+    {
+      "id": "guarda",
+      "numero": 31,
+      "nome": "Guarda",
+      "categoria": "terreno",
+      "posicao": "frente",
+      "resumo": "protege uma zona",
+      "na_luta": "não sai da zona dele. Só ataca quem entra nela.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Ninguém Passa",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": "empurrado pra fora"
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Escudo na Cara",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado! + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Confisco",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Exposto",
+          "nota": "empurra a guarda do alvo pro lado"
+        },
+        {
+          "tipo": "especial",
+          "nome": "Zona Proibida",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos dentro da zona.",
+          "nota": null,
+          "para_se": "alguém pegar o que ele guarda."
+        }
+      ]
+    },
+    {
+      "id": "engolidor",
+      "numero": 32,
+      "nome": "Engolidor",
+      "categoria": "terreno",
+      "posicao": "frente",
+      "resumo": "gruda e devora",
+      "na_luta": "gruda em quem bate nele e vai em quem está Caído.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Abocanhada",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Suco Gástrico",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Ardendo! + Exposto",
+          "nota": "derrete a armadura"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Arma Afunda",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Exposto",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Bocão",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Captura",
+          "efeito": "engole quem está Caído, ou o mais perto, e ele sai do mapa. Perde 1 de Vida todo turno e só age pra se soltar (Pleno sai).",
+          "nota": null,
+          "para_se": "alguém fizer ele vomitar."
+        }
+      ]
+    },
+    {
+      "id": "hipnotizador",
+      "numero": 33,
+      "nome": "Hipnotizador",
+      "categoria": "terreno",
+      "posicao": "meio",
+      "resumo": "faz o alvo parar",
+      "na_luta": "não quer matar, quer que o alvo pare. Sempre tem um Quer que dá pra negociar.",
+      "nao_pega": {
+        "naipe": "Zonear",
+        "motivo": "ninguém mexe com a cabeça dele."
+      },
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Canto",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Hipnose",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Atordoado",
+          "nota": "o alvo anda até ele, em transe"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "\"Olha pra Mim\"",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Coro",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Pânico",
+          "efeito": "Atordoado! + Caído em todos que conseguem ouvir. Todo mundo para, de boca aberta.",
+          "nota": null,
+          "para_se": "alguém fizer mais barulho."
+        }
+      ]
+    },
+    {
+      "id": "armadilheiro",
+      "numero": 34,
+      "nome": "Armadilheiro",
+      "categoria": "terreno",
+      "posicao": "tras",
+      "resumo": "prepara o campo antes",
+      "na_luta": "antes da luta, marca 3 casas no mapa em segredo. Quem pisa nelas fica Caído.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Lança*",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": true,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Arapuca",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Exposto",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Estalo",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Fio Mestre",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos sobre casas marcadas.",
+          "nota": null,
+          "para_se": "alguém achar e cortar o fio."
+        }
+      ]
+    },
+    {
+      "id": "elementalista",
+      "numero": 35,
+      "nome": "Elementalista",
+      "categoria": "terreno",
+      "posicao": "tras",
+      "resumo": "muda o chão a cada turno",
+      "na_luta": "todo turno, escolhe uma área 3×3. Até o próximo turno dele, quem entra ali fica Caído (gelo, lama, vento).",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Labareda",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Brasas no Chão",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Ardendo! + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Rajada",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Tempestade",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Terreno",
+          "efeito": "a sala inteira vira gelo, lama ou vendaval até o “Para se”. Quem começa o turno ali fica Caído.",
+          "nota": null,
+          "para_se": "alguém quebrar o cajado ou o cristal dele."
+        }
+      ]
+    },
+    {
+      "id": "amaldicoador",
+      "numero": 36,
+      "nome": "Amaldiçoador",
+      "categoria": "terreno",
+      "posicao": "tras",
+      "resumo": "enfraquece de longe",
+      "na_luta": "fica longe e escolhe um alvo pra amaldiçoar a luta toda.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Toque Podre",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Exposto",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "roubo",
+          "nome": "Maldição",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [],
+          "roubo": true,
+          "item": false,
+          "efeito": "Roubo!",
+          "nota": "cala a voz ou cega um olho"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Mau Olhado",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Ritual",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": true
+            },
+            {
+              "nome": "Ardendo",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Pânico",
+          "efeito": "Exposto! + Ardendo em todos dentro do círculo.",
+          "nota": null,
+          "para_se": "alguém apagar o círculo ou as velas."
+        }
+      ]
+    },
+    {
+      "id": "curandeiro",
+      "numero": 41,
+      "nome": "Curandeiro",
+      "categoria": "bando",
+      "posicao": "tras",
+      "resumo": "mantém os aliados de pé",
+      "na_luta": "fica atrás de quem ele serve e nunca vem sozinho. Numa Gangue, cada 2 de cura traz um membro de volta.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "cura",
+          "nome": "Bênção",
+          "tier_minimo": "fraco",
+          "dano": false,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "efeito": "um aliado recupera 2",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Praga",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Ardendo",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado! + Ardendo",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Luz nos Olhos",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Levanta!",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Reforço",
+          "efeito": "os aliados caídos dele voltam como uma Gangue de Fracos, 1 membro por jogador.",
+          "nota": null,
+          "para_se": "alguém interromper o ritual."
+        }
+      ]
+    },
+    {
+      "id": "comandante",
+      "numero": 42,
+      "nome": "Comandante",
+      "categoria": "bando",
+      "posicao": "meio",
+      "resumo": "os aliados agem melhor",
+      "na_luta": "quando ele age, um aliado dele move 3 de graça.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Sabre*",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": true,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "\"Cerquem!\"",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "\"Segurem a Linha!\"",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "\"Reforços!\"",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Reforço",
+          "efeito": "entra uma Gangue de Fracos do lado dele, 1 por jogador. A corneta toca e um pelotão entra correndo.",
+          "nota": null,
+          "para_se": "alguém travar o estandarte ou calar a corneta."
+        }
+      ]
+    },
+    {
+      "id": "invocador",
+      "numero": 43,
+      "nome": "Invocador",
+      "categoria": "bando",
+      "posicao": "tras",
+      "resumo": "chama reforços",
+      "na_luta": "se tem menos de 2 lacaios (Fracos) em cena, chama 1 por turno, de graça. No máximo 3 por luta. Os lacaios contam como parte dele na receita de Encontros.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Raio Sombrio",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Mãos do Chão",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Exposto",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Correntes",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Horda",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Reforço",
+          "efeito": "entra uma Gangue de Fracos no portal, 1 por jogador.",
+          "nota": null,
+          "para_se": "alguém fechar o portal."
+        }
+      ]
+    },
+    {
+      "id": "escudeiro",
+      "numero": 44,
+      "nome": "Escudeiro",
+      "categoria": "bando",
+      "posicao": "frente",
+      "resumo": "se põe na frente de um aliado",
+      "na_luta": "fica colado num aliado. Ataque nesse aliado acerta o Escudeiro primeiro.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Escudada",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Muralha de Escudo",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Exposto! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Empurrão de Escudo",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Avanço",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos à frente do escudo.",
+          "nota": null,
+          "para_se": "alguém passar por trás dele."
+        }
+      ]
+    },
+    {
+      "id": "domador",
+      "numero": 45,
+      "nome": "Domador",
+      "categoria": "bando",
+      "posicao": "meio",
+      "resumo": "luta junto com uma fera",
+      "na_luta": "ele e a fera são um cartão só. Cada Golpe é dele ou da fera, de quem estiver mais perto do alvo.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Chicote ou Mordida",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "roubo",
+          "nome": "\"Pega!\"",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [],
+          "roubo": true,
+          "item": false,
+          "efeito": "Roubo!",
+          "nota": "a fera arranca a arma com os dentes"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Rosnado",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Debandada",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos no caminho da fera.",
+          "nota": null,
+          "para_se": "alguém acalmar ou soltar a fera."
+        }
+      ]
+    },
+    {
+      "id": "enxame",
+      "numero": 46,
+      "nome": "Enxame de ___",
+      "categoria": "bando",
+      "posicao": "frente",
+      "resumo": "muitos e pequenos, num cartão só",
+      "na_luta": "é sempre Gangue. Quem passa por dentro do enxame fica Atordoado.",
+      "nao_pega": {
+        "naipe": "Travar",
+        "motivo": "segura um, e o resto passa."
+      },
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Ferroada",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Nuvem",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Ardendo",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado! + Ardendo",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Zumbido",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Cobertor Vivo",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Terreno",
+          "efeito": "o enxame cobre o cômodo até o “Para se”. Quem começa o turno ali fica Ardendo.",
+          "nota": null,
+          "para_se": "alguém fizer fumaça ou fogo."
+        }
+      ],
+      "nome_placeholder": true
+    },
+    {
+      "id": "furtivo",
+      "numero": 51,
+      "nome": "Furtivo",
+      "categoria": "emboscada",
+      "posicao": "meio",
+      "resumo": "bate e some",
+      "na_luta": "depois do Golpe, some de vista. Volta em quem está sozinho.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Facada nas Costas",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Lâmina Envenenada*",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": true,
+          "efeito": "Ardendo! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Sumiço",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Apagão",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Terreno",
+          "efeito": "as luzes apagam até o “Para se”. Quem começa o turno no escuro fica Atordoado.",
+          "nota": null,
+          "para_se": "alguém acender a luz."
+        }
+      ]
+    },
+    {
+      "id": "cacador",
+      "numero": 52,
+      "nome": "Caçador",
+      "categoria": "emboscada",
+      "posicao": "meio",
+      "resumo": "marca uma presa",
+      "na_luta": "no começo da luta, marca uma presa. Ele e os aliados dele vão nela.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Marcar a Presa",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Encurralar",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Exposto",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Rasteira",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Cerco",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Reforço",
+          "efeito": "entra uma Gangue de Fracos em volta da presa, 1 por jogador. A matilha sai do mato e fecha o círculo.",
+          "nota": null,
+          "para_se": "alguém travar quem lidera a caçada."
+        }
+      ]
+    },
+    {
+      "id": "ladrao",
+      "numero": 53,
+      "nome": "Ladrão",
+      "categoria": "emboscada",
+      "posicao": "meio",
+      "resumo": "rouba e foge",
+      "na_luta": "depois de roubar, corre pra sair de cena. Se fugir, o que ele levou vai junto.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Facada e Furto",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Exposto",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "roubo",
+          "nome": "Distrair e Roubar",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [],
+          "roubo": true,
+          "item": false,
+          "efeito": "Roubo!",
+          "nota": "enquanto você olha pro outro lado"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Bolso Batido",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Exposto",
+          "nota": "você confere o bolso e baixa a guarda"
+        },
+        {
+          "tipo": "especial",
+          "nome": "Chuva de Facas",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos a 2 espaços.",
+          "nota": null,
+          "para_se": "alguém segurar ele pela gola."
+        }
+      ]
+    },
+    {
+      "id": "trapaceiro",
+      "numero": 54,
+      "nome": "Trapaceiro",
+      "categoria": "emboscada",
+      "posicao": "meio",
+      "resumo": "troca coisas e pessoas de lugar",
+      "na_luta": "uma vez por turno, de graça, troca de lugar com qualquer um que ele enxergue.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Faca Escondida",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Troca-Troca",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Atordoado",
+          "nota": "teletransporta o alvo"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "\"Não Fui Eu\"",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": "troca de lugar com quem rolou"
+        },
+        {
+          "tipo": "especial",
+          "nome": "Casa de Espelhos",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Pânico",
+          "efeito": "Atordoado! + Caído em todos a 2 espaços. Ele troca todo mundo de lugar.",
+          "nota": null,
+          "para_se": "alguém achar o verdadeiro entre as cópias."
+        }
+      ]
+    },
+    {
+      "id": "escavador",
+      "numero": 55,
+      "nome": "Escavador",
+      "categoria": "emboscada",
+      "posicao": "meio",
+      "resumo": "vem por baixo da terra",
+      "na_luta": "anda por baixo da terra. Só pode ser atacado no turno em que sai.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Bote de Baixo",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Areia Movediça",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Terra nos Olhos",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Desmoronamento",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Terreno",
+          "efeito": "o chão em cima dos túneis vira buraco até o “Para se”. Quem começa o turno ali fica Caído.",
+          "nota": null,
+          "para_se": "alguém tampar ou inundar a saída."
+        }
+      ]
+    },
+    {
+      "id": "imitador",
+      "numero": 56,
+      "nome": "Imitador",
+      "categoria": "emboscada",
+      "posicao": "frente",
+      "resumo": "se passa por algo ou alguém",
+      "na_luta": "começa disfarçado (de porta, de baú, de um aliado) e se revela atacando quem chegar mais perto.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Bocada",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": "puxa o alvo pra dentro"
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "roubo",
+          "nome": "Cópia",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [],
+          "roubo": true,
+          "item": false,
+          "efeito": "Roubo!",
+          "nota": "copia a perícia que o alvo usou e toma ela pra si"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Voz de Amigo",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": "chama o alvo pro lado errado"
+        },
+        {
+          "tipo": "especial",
+          "nome": "Espelho",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos.",
+          "nota": null,
+          "para_se": "alguém usar uma perícia que ninguém usou nesta luta."
+        }
+      ]
+    },
+    {
+      "id": "imortal",
+      "numero": 61,
+      "nome": "Imortal",
+      "categoria": "estranha",
+      "posicao": "frente",
+      "resumo": "cai e levanta",
+      "na_luta": "quando cai, levanta no próximo turno dele com 2 de Vida, no máximo 2 vezes. Resolver o ponto fraco acaba com isso. Mostre o ponto fraco na cena antes da luta.",
+      "nao_pega": {
+        "naipe": "Abalar",
+        "motivo": "quem já morreu não tem medo."
+      },
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Garra Podre",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Grito do Além",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado! + Exposto",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Nem Doeu",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Fúria do Túmulo",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos em volta dele.",
+          "nota": null,
+          "para_se": "alguém atacar o ponto fraco."
+        }
+      ]
+    },
+    {
+      "id": "regenerador",
+      "numero": 62,
+      "nome": "Regenerador",
+      "categoria": "estranha",
+      "posicao": "frente",
+      "resumo": "cortou, nasce outro",
+      "na_luta": "no começo do turno dela, recupera 2, a menos que alguém tenha queimado uma ferida desde o último turno.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Mordida Tripla",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Cuspe de Veneno",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Ardendo! + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Bote Lateral",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Todas as Cabeças",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos a 2 espaços.",
+          "nota": null,
+          "para_se": "alguém fizer as cabeças brigarem entre si."
+        }
+      ]
+    },
+    {
+      "id": "sanguessuga",
+      "numero": 63,
+      "nome": "Sanguessuga",
+      "categoria": "estranha",
+      "posicao": "frente",
+      "resumo": "rouba Vida pra si",
+      "na_luta": "vai em quem está mais ferido. Quando o Golpe de Dano acerta, ela recupera 2.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Presa",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Sangria",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Ardendo! + Caído",
+          "nota": "ela gruda"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Grudar",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Banquete",
+          "tier_minimo": "forte",
+          "dano": true,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D em todos abaixo da metade da Vida.",
+          "nota": null,
+          "para_se": "alguém oferecer outro sangue pra ela beber."
+        }
+      ]
+    },
+    {
+      "id": "explosivo",
+      "numero": 64,
+      "nome": "Explosivo",
+      "categoria": "estranha",
+      "posicao": "frente",
+      "resumo": "explode e morre",
+      "na_luta": "corre pro maior grupo. Tem o Kabum em qualquer tier. Depois do Kabum, ele morre.",
+      "nao_pega": {
+        "naipe": "Abalar",
+        "motivo": "ele já veio pra morrer."
+      },
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Cabeçada",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Pavio Aceso",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Caído",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado! + Caído",
+          "nota": null
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Faísca",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Kabum",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Ardendo",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Explosão",
+          "efeito": "D + Ardendo em todos a 2 espaços.",
+          "nota": null,
+          "para_se": "alguém apagar o pavio ou jogar ele na água."
+        }
+      ]
+    },
+    {
+      "id": "possessor",
+      "numero": 65,
+      "nome": "Possessor",
+      "categoria": "estranha",
+      "posicao": "meio",
+      "resumo": "toma o corpo de alguém",
+      "na_luta": "vive dentro de um hospedeiro (pessoa, animal, armadura). Quem bate nele bate no hospedeiro também. Se o hospedeiro é inocente, o grupo precisa expulsar o Possessor antes, com sal, reza, fogo ou o nome verdadeiro dele.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Mão Alheia",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Possessão",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Exposto",
+          "nota": "o corpo do alvo anda sozinho"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Sussurro",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Tomar o Corpo",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [],
+          "roubo": false,
+          "item": false,
+          "forma": "Captura",
+          "efeito": "puxa a alma de quem olha pra ele. O corpo cai e sai de jogo. Perde 1 de Vida todo turno e só age pra se soltar (Pleno sai).",
+          "nota": null,
+          "para_se": "alguém disser o nome verdadeiro dele."
+        }
+      ]
+    },
+    {
+      "id": "intocavel",
+      "numero": 66,
+      "nome": "Intocável",
+      "categoria": "estranha",
+      "posicao": "frente",
+      "resumo": "imune a dano até achar a fraqueza",
+      "na_luta": "não toma dano até alguém descobrir a fraqueza dele (luz do sol, prata, o nome, um espelho). Os Naipes dos jogadores funcionam normal. Mostre uma pista antes da luta.",
+      "nao_pega": null,
+      "pecas": [
+        {
+          "tipo": "golpe",
+          "subtipo": "dano",
+          "nome": "Toque Gelado",
+          "tier_minimo": "fraco",
+          "dano": true,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "D + Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "golpe",
+          "subtipo": "naipes",
+          "nome": "Atravessar",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Caído",
+              "principal": true
+            },
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Caído! + Atordoado",
+          "nota": "passa através do alvo e derruba ele de frio"
+        },
+        {
+          "tipo": "resposta",
+          "subtipo": "naipes",
+          "nome": "Riso",
+          "tier_minimo": "medio",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "efeito": "Atordoado",
+          "nota": null
+        },
+        {
+          "tipo": "especial",
+          "nome": "Lamento",
+          "tier_minimo": "forte",
+          "dano": false,
+          "naipes": [
+            {
+              "nome": "Atordoado",
+              "principal": true
+            },
+            {
+              "nome": "Exposto",
+              "principal": false
+            }
+          ],
+          "roubo": false,
+          "item": false,
+          "forma": "Pânico",
+          "efeito": "Atordoado! + Exposto em todos no cômodo. O grito gela o sangue.",
+          "nota": null,
+          "para_se": "alguém usar a fraqueza dele."
+        }
+      ]
+    }
+  ]
+}
