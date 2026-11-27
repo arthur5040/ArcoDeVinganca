@@ -13,9 +13,9 @@ FORMAS = ["Explosão", "Pânico", "Reforço", "Terreno", "Captura"]
 
 TIERS = [
     {"id": "fraco", "nome": "Fraco", "vida": 2, "vida_por_jogador": False, "dano": 1, "acoes": 1, "pecas": "Golpe"},
-    {"id": "medio", "nome": "Médio", "vida": 5, "vida_por_jogador": False, "dano": 2, "acoes": 1, "pecas": "Golpe de Dano, Golpe de Naipes, Resposta"},
-    {"id": "forte", "nome": "Forte", "vida": 5, "vida_por_jogador": True, "dano": 3, "acoes": 2, "pecas": "Golpes, Resposta, Especial"},
-    {"id": "chefao", "nome": "Chefão", "vida": 6, "vida_por_jogador": True, "dano": 4, "acoes": 2, "pecas": "Golpes, Resposta, Especial"},
+    {"id": "medio", "nome": "Médio", "vida": 5, "vida_por_jogador": False, "dano": 2, "acoes": 1, "pecas": "Golpe de Dano, Golpe de Naipes"},
+    {"id": "forte", "nome": "Forte", "vida": 5, "vida_por_jogador": True, "dano": 3, "acoes": 2, "pecas": "Golpes, Especial"},
+    {"id": "chefao", "nome": "Chefão", "vida": 6, "vida_por_jogador": True, "dano": 4, "acoes": 2, "pecas": "Golpes, Especial"},
 ]
 
 NAIPES_OPONENTE = [
@@ -143,12 +143,9 @@ def peca(linha, ordem_golpe):
         subtipo = "dano"
     else:
         subtipo = "naipes"
-    if tipo_letra == "G":
-        tier = "fraco" if ordem_golpe == 0 else "medio"
-    else:
-        tier = "medio"
+    tier = "fraco" if ordem_golpe == 0 else "medio"
     return {
-        "tipo": "golpe" if tipo_letra == "G" else "resposta",
+        "tipo": "golpe",
         "subtipo": subtipo,
         "nome": nome,
         "tier_minimo": tier,
@@ -206,7 +203,7 @@ def main():
     assert len(moldes) == 36, len(moldes)
     for m in moldes:
         tipos = [p["tipo"] for p in m["pecas"]]
-        assert tipos == ["golpe", "golpe", "resposta", "especial"], (m["id"], tipos)
+        assert tipos == ["golpe", "golpe", "especial"], (m["id"], tipos)
     dados = {
         "sistema": "SAGA",
         "versao": "0.7",

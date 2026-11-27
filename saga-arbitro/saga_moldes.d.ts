@@ -36,18 +36,13 @@ export interface Golpe extends PecaBase {
   subtipo: "dano" | "naipes" | "roubo" | "cura";
 }
 
-export interface Resposta extends PecaBase {
-  tipo: "resposta";
-  subtipo: "dano" | "naipes" | "roubo" | "cura";
-}
-
 export interface Especial extends PecaBase {
   tipo: "especial";
   forma: FormaEspecial;
   para_se: string | null;    // o que faz o Especial parar
 }
 
-export type Peca = Golpe | Resposta | Especial;
+export type Peca = Golpe | Especial;   // oponente não tem Resposta
 
 export interface Molde {
   id: string;
@@ -59,7 +54,7 @@ export interface Molde {
   resumo: string;            // a frase curta embaixo do nome
   na_luta: string;           // como ele se comporta na luta
   nao_pega: { naipe: string; motivo: string } | null; // Naipe do jogador que não funciona nele
-  pecas: Peca[];             // sempre 2 Golpes, 1 Resposta e 1 Especial
+  pecas: Peca[];             // sempre 2 Golpes e 1 Especial
 }
 
 export interface Categoria {

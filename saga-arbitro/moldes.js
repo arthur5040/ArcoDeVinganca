@@ -20,7 +20,7 @@ window.SAGA_MOLDES = {
       "vida_por_jogador": false,
       "dano": 2,
       "acoes": 1,
-      "pecas": "Golpe de Dano, Golpe de Naipes, Resposta"
+      "pecas": "Golpe de Dano, Golpe de Naipes"
     },
     {
       "id": "forte",
@@ -29,7 +29,7 @@ window.SAGA_MOLDES = {
       "vida_por_jogador": true,
       "dano": 3,
       "acoes": 2,
-      "pecas": "Golpes, Resposta, Especial"
+      "pecas": "Golpes, Especial"
     },
     {
       "id": "chefao",
@@ -38,7 +38,7 @@ window.SAGA_MOLDES = {
       "vida_por_jogador": true,
       "dano": 4,
       "acoes": 2,
-      "pecas": "Golpes, Resposta, Especial"
+      "pecas": "Golpes, Especial"
     }
   ],
   "naipes_do_oponente": [
@@ -192,23 +192,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Ombrada",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Pisão",
           "tier_minimo": "forte",
@@ -270,23 +253,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Ardendo! + Atordoado",
           "nota": null
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Farpa",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Exposto",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Exposto",
-          "nota": "a arma fica presa nos espinhos"
         },
         {
           "tipo": "especial",
@@ -357,23 +323,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "\"MAIS!\"",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Fúria Cega",
           "tier_minimo": "forte",
@@ -440,23 +389,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Aparar",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Exposto",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Exposto",
-          "nota": "apara e abre sua guarda"
-        },
-        {
           "tipo": "especial",
           "nome": "Mil Cortes",
           "tier_minimo": "forte",
@@ -517,23 +449,6 @@ window.SAGA_MOLDES = {
           "roubo": false,
           "item": false,
           "efeito": "Ardendo! + Atordoado",
-          "nota": null
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Coice",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
           "nota": null
         },
         {
@@ -603,23 +518,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Bufada",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Desabar",
           "tier_minimo": "forte",
@@ -680,23 +578,6 @@ window.SAGA_MOLDES = {
           "roubo": false,
           "item": true,
           "efeito": "Caído! + Atordoado",
-          "nota": null
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Tiro de Aviso",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
           "nota": null
         },
         {
@@ -763,23 +644,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Fumaça",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Barril de Pólvora",
           "tier_minimo": "forte",
@@ -843,23 +707,6 @@ window.SAGA_MOLDES = {
           "nota": "o alvo escorrega"
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Respingo",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": "nos olhos"
-        },
-        {
           "tipo": "especial",
           "nome": "Jorro",
           "tier_minimo": "forte",
@@ -912,23 +759,6 @@ window.SAGA_MOLDES = {
           "item": true,
           "efeito": "Roubo!",
           "nota": "fisga a arma e puxa"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Puxão",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": null
         },
         {
           "tipo": "especial",
@@ -994,23 +824,6 @@ window.SAGA_MOLDES = {
           "nota": "larga o alvo longe do grupo"
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Bater de Asas",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Rapto",
           "tier_minimo": "forte",
@@ -1063,23 +876,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Roubo!",
           "nota": "apaga um Sobrenatural do alvo"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Trava",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": "paralisa no lugar"
         },
         {
           "tipo": "especial",
@@ -1154,23 +950,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Confisco",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Exposto",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Exposto",
-          "nota": "empurra a guarda do alvo pro lado"
-        },
-        {
           "tipo": "especial",
           "nome": "Zona Proibida",
           "tier_minimo": "forte",
@@ -1232,23 +1011,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Ardendo! + Exposto",
           "nota": "derrete a armadura"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Arma Afunda",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Exposto",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Exposto",
-          "nota": null
         },
         {
           "tipo": "especial",
@@ -1320,23 +1082,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Caído! + Atordoado",
           "nota": "o alvo anda até ele, em transe"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "\"Olha pra Mim\"",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
         },
         {
           "tipo": "especial",
@@ -1411,23 +1156,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Estalo",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Fio Mestre",
           "tier_minimo": "forte",
@@ -1491,23 +1219,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Rajada",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Tempestade",
           "tier_minimo": "forte",
@@ -1565,23 +1276,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Roubo!",
           "nota": "cala a voz ou cega um olho"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Mau Olhado",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
         },
         {
           "tipo": "especial",
@@ -1651,23 +1345,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Luz nos Olhos",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Levanta!",
           "tier_minimo": "forte",
@@ -1728,23 +1405,6 @@ window.SAGA_MOLDES = {
           "roubo": false,
           "item": false,
           "efeito": "Caído! + Atordoado",
-          "nota": null
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "\"Segurem a Linha!\"",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
           "nota": null
         },
         {
@@ -1811,23 +1471,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Correntes",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Horda",
           "tier_minimo": "forte",
@@ -1891,23 +1534,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Empurrão de Escudo",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Avanço",
           "tier_minimo": "forte",
@@ -1960,23 +1586,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Roubo!",
           "nota": "a fera arranca a arma com os dentes"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Rosnado",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
         },
         {
           "tipo": "especial",
@@ -2042,23 +1651,6 @@ window.SAGA_MOLDES = {
           "roubo": false,
           "item": false,
           "efeito": "Atordoado! + Ardendo",
-          "nota": null
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Zumbido",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
           "nota": null
         },
         {
@@ -2131,23 +1723,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Sumiço",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Apagão",
           "tier_minimo": "forte",
@@ -2216,23 +1791,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Rasteira",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Cerco",
           "tier_minimo": "forte",
@@ -2285,23 +1843,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Roubo!",
           "nota": "enquanto você olha pro outro lado"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Bolso Batido",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Exposto",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Exposto",
-          "nota": "você confere o bolso e baixa a guarda"
         },
         {
           "tipo": "especial",
@@ -2365,23 +1906,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Caído! + Atordoado",
           "nota": "teletransporta o alvo"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "\"Não Fui Eu\"",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": "troca de lugar com quem rolou"
         },
         {
           "tipo": "especial",
@@ -2456,23 +1980,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Terra nos Olhos",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Desmoronamento",
           "tier_minimo": "forte",
@@ -2530,23 +2037,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Roubo!",
           "nota": "copia a perícia que o alvo usou e toma ela pra si"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Voz de Amigo",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": "chama o alvo pro lado errado"
         },
         {
           "tipo": "especial",
@@ -2615,23 +2105,6 @@ window.SAGA_MOLDES = {
           "nota": null
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Nem Doeu",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Fúria do Túmulo",
           "tier_minimo": "forte",
@@ -2692,23 +2165,6 @@ window.SAGA_MOLDES = {
           "roubo": false,
           "item": false,
           "efeito": "Ardendo! + Atordoado",
-          "nota": null
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Bote Lateral",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
           "nota": null
         },
         {
@@ -2775,23 +2231,6 @@ window.SAGA_MOLDES = {
           "nota": "ela gruda"
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Grudar",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Caído",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Caído",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Banquete",
           "tier_minimo": "forte",
@@ -2855,23 +2294,6 @@ window.SAGA_MOLDES = {
           "roubo": false,
           "item": false,
           "efeito": "Atordoado! + Caído",
-          "nota": null
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Faísca",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
           "nota": null
         },
         {
@@ -2943,23 +2365,6 @@ window.SAGA_MOLDES = {
           "nota": "o corpo do alvo anda sozinho"
         },
         {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Sussurro",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
-        },
-        {
           "tipo": "especial",
           "nome": "Tomar o Corpo",
           "tier_minimo": "forte",
@@ -3021,23 +2426,6 @@ window.SAGA_MOLDES = {
           "item": false,
           "efeito": "Caído! + Atordoado",
           "nota": "passa através do alvo e derruba ele de frio"
-        },
-        {
-          "tipo": "resposta",
-          "subtipo": "naipes",
-          "nome": "Riso",
-          "tier_minimo": "medio",
-          "dano": false,
-          "naipes": [
-            {
-              "nome": "Atordoado",
-              "principal": false
-            }
-          ],
-          "roubo": false,
-          "item": false,
-          "efeito": "Atordoado",
-          "nota": null
         },
         {
           "tipo": "especial",

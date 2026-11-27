@@ -10,7 +10,7 @@
   const MOLDE = Object.fromEntries(M.moldes.map((m) => [m.id, m]));
   const CATEGORIA = Object.fromEntries(M.categorias.map((c) => [c.id, c]));
   const POS_NOME = { frente: "Frente", meio: "Meio", tras: "Trás" };
-  const TIPO_NOME = { golpe: "Golpe", resposta: "Resposta", especial: "Especial" };
+  const TIPO_NOME = { golpe: "Golpe", especial: "Especial" };
   const MORAIS = [6, 7, 8];
 
   const BATIDAS = [
@@ -59,7 +59,17 @@
 
   function carregar(email) {
     const bruto = lerJSON(chaveDados(email));
-    return bruto && Array.isArray(bruto.historias) ? bruto : { historias: [] };
+    const dados = bruto && Array.isArray(bruto.historias) ? bruto : { historias: [] };
+    migrarSemResposta(dados);
+    return dados;
+  }
+  /** Oponente não tem mais Resposta: os moldes têm 3 peças (Golpe, Golpe, Especial).
+   *  Esquadrões salvos antes guardavam 4 nomes; o 3º era o da Resposta. */
+  function migrarSemResposta(dados) {
+    (dados.historias || []).forEach((h) => (h.esquadroes || []).forEach((e) => (e.oponentes || []).forEach((op) => {
+      if (Array.isArray(op.nomesPecas) && op.nomesPecas.length === 4) op.nomesPecas.splice(2, 1);
+    })));
+    return dados;
   }
   function gravar() {
     if (!usuario) return false;
@@ -1576,6 +1586,7 @@
         let n = 0;
         lista.forEach((h) => {
           if (!h || !h.id || !Array.isArray(h.esquadroes) || !Array.isArray(h.batidas)) return;
+          migrarSemResposta({ historias: [h] });
           if (historia(h.id)) h.id = novoId();
           db.historias.push(h);
           n++;
